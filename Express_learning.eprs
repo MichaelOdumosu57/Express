@@ -1,4 +1,5 @@
 https://expressjs.com/en/starter/hello-world.html
+https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods
 
 
 E -> X -> P -> R -> E -> S -> S ->
@@ -13,7 +14,7 @@ to setup up a node environment with an express dependency
 
 
 
-                                        E -> X -> P -> R -> E -> S -> S ->
+                              E -> X -> P -> R -> E -> S -> S ->
 
 hello world
 const express = require('express')
@@ -24,4 +25,75 @@ app.get('/', (req, res) => res.send('Hello World!'))
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))	
 
+														E -> X -> P -> R -> E -> S -> S ->
 
+
+app.METHOD(PATH, HANDLER)
+Where:
+
+app is an instance of express.
+METHOD is an HTTP request method, in lowercase.
+PATH is a path on the server.
+HANDLER is the function executed when the route is matched.
+
+
+																					E -> X -> P -> R -> E -> S -> S ->
+
+METHOD 
+GET
+The GET method requests a representation of the specified resource. Requests using GET should only retrieve data and should have no other effect.
+HEAD
+The HEAD method retrieves meta-information written in response headers without the response body., without having to transport the entire content.
+POST
+its giving an object data tot the server
+PUT
+modifes existing resources if target resources is there for the changes client side or makes a new one if target reosurce is not present in server side  
+DELETE
+The DELETE method deletes the specified resource.
+TRACE
+The TRACE method echoes the received request so that a client can see what (if any) changes or additions have been made by intermediate servers.
+OPTIONS
+The OPTIONS method returns the HTTP methods that the server supports for the specified URL. This can be used to check the functionality of a web server by requesting '*' instead of a specific resource.
+CONNECT
+[25] The CONNECT method converts the request connection to a transparent TCP/IP tunnel, usually to facilitate SSL-encrypted communication (HTTPS) through an unencrypted HTTP proxy.[26][27] See HTTP CONNECT method.
+PATCH
+The PATCH method applies partial modifications to a resource.[28]
+
+All general-purpose HTTP servers are required to implement at least the GET and HEAD methods, and all other methods are considered optional by the specification.[29]
+
+Safe methods
+Some of the methods (for example, HEAD, GET, OPTIONS and TRACE) are, by convention, defined as safe, which means they are intended only for information retrieval and should not change the state of the server.
+
+By contrast, methods such as POST, PUT, DELETE and PATCH are intended for actions that may cause side effects either on the server, or external side effects such as financial transactions or transmission of email. Such methods are therefore not usually used by conforming web robots or web crawlers; some that do not conform tend to make requests without regard to context or consequences.
+
+
+E -> X -> P -> R -> E -> S -> S ->
+
+Serving static files in Express
+
+to access a sub_directory where the express app is running 
+app.use(express.static('[directory_name]'))
+to access several directories you must call this several times
+file:basic_app/static_serving/serve_static.js 
+
+
+to access a dir not on the filesystem
+app.use('/static', express.static('public'))
+
+
+
+to access a subdir
+app.use('[path location of subdir]', express.static(path.join(    __dirname,'[parent_dir....]', '[subdir]'   )   )   )
+file:basic_app/static_serving/serve_diff_dir.js
+
+                              E -> X -> P -> R -> E -> S -> S ->
+
+
+
+														E -> X -> P -> R -> E -> S -> S ->
+
+
+
+
+
+																					E -> X -> P -> R -> E -> S -> S ->
