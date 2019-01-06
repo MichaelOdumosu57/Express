@@ -4,6 +4,9 @@ const app = express()
 const port = 3000
 const file_name = __filename.split("/")[__filename.split("/").length-1].split(".js")[0]
 
+app.get('/[sample]', function (req, res, next) {
+});
+
 app.get('/hang_request', function (req, res, next) {
   //no response method  
 })
@@ -27,7 +30,7 @@ app.get('/download', function (req, res, next) {
 //end
 app.get('/end', function (req, res, next) {
     // res.end();
-  res.status(403).end();
+    res.status(403).end();
 });
 
 
@@ -56,6 +59,63 @@ app.get('/redirects', function (req, res, next) {
     // res.redirect('../login');
     res.redirect('redir/');
 });
+
+
+
+
+app.get('/set', function (req, res, next) {
+    // res.set('Content-Type', 'application/json');
+    // res.send('<xml>some html</xml>');  
+    // res.set('Content-Type', 'text/html');
+    // res.send('<h1>paragraph</h1>'); 
+    // res.set({
+    //   'Content-Type': 'text/plain',
+    //   'Content-Length': '1',
+      
+    // });
+    res.send('<h1>paragraph</h1>');             
+});
+
+app.get('/sendFile/:name', function (req, res, next) {
+
+  // var options = {
+  //   root: __dirname + '/sendFile_options/',
+  //   dotfiles: 'deny',
+  //   headers: {
+  //       'x-timestamp': Date.now(),
+  //       'x-sent': true
+  //   }
+  // };
+
+  // var fileName = req.params.name;
+  // res.sendFile(fileName, options, function (err) {
+  //   if (err) {
+  //     console.log("file not found error",err)
+  //     next("a problem finding the file");
+  //   } else {
+  //     console.log('Sent:', fileName);
+  //   }
+  // });
+
+
+    var name = req.params.name
+    mayViewFilesFrom(   name,res   )
+      
+
+
+    
+});
+
+
+    function  mayViewFilesFrom (yes, response){
+      if (yes == "a.txt") {
+        response.sendFile(__dirname + "/sendFile_options/" + yes);
+      } 
+
+      else {
+        response.status(403).send("Sorry! You can't see that.");
+      }
+    }
 
 
 

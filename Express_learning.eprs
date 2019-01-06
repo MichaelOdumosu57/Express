@@ -354,6 +354,117 @@ file:/response_methods/response_methods.js
 
 E-> do  not connect your routes to example.com the system deep links it and can ruin future plans with  your app 
 
+res.render(view [, locals] [, callback])
+Render a view template.
+we wont be using this, 
+
+E-> refer to res.render for REact and Redux
+
+
+res.set(field [, value])
+sets the content type before sending data
+		res.set('Content-Type', 'text/html');
+		res.send(new Buffer('<p>some html</p>'));
+
+		res.set({
+		  'Content-Type': 'text/plain',
+		  'Content-Length': '1',
+		  
+		});		
+E-> it seems at a basic level content-length does not affect anything but please try not to include this parameter if working with 
+dynamics in size		
+file:/response_methods/response_methods.js		
+
+E-> depending on the content type the browser modifies how you see the data
+
+
+res.sendFile
+the options parameter
+		+--------------+------------------------------------------------------------------------------ +----------+--------------+
+		| ﻿"Property"   | Description                                                                   | Default  | Availability |
+		+--------------+------------------------------------------------------------------------------ +----------+--------------+
+		| maxAge       | Sets the max-age property of the Cache-Control 
+		|              | header in milliseconds or a string in ms format                               | 0        |              |
+		+--------------+-------------------------------------------------------------------------------+----------+--------------+
+		| root         | Root directory for relative filenames.                                        |          |              |
+		+--------------+-------------------------------------------------------------------------------+----------+--------------+
+		| lastModified | Sets the Last-Modified header to the last modified date 
+		|              |of the file on the OS. Set false to disable it.                                | Enabled  | 4.9.0+       |
+		+--------------+-------------------------------------------------------------------------------+----------+--------------+
+		| headers      | Object containing HTTP headers to serve with the file.                        |          |              |
+		+--------------+-------------------------------------------------------------------------------+----------+--------------+
+		| dotfiles     | Option for serving dotfiles. Possible values are “allow”, “deny”, “ignore”.   | “ignore” |              |
+		+--------------+-------------------------------------------------------------------------------+----------+--------------+
+		| acceptRanges | Enable or disable accepting ranged requests.                                  | true     | 4.14+        |
+		+--------------+-------------------------------------------------------------------------------+----------+--------------+
+		| cacheControl | Enable or disable setting Cache-Control response header.                      | true     | 4.14+        |
+		+--------------+-------------------------------------------------------------------------------+----------+--------------+
+		| immutable    | Enable or disable the immutable directive in the Cache-Control
+		|              |response header. If enabled, the maxAge option 
+		|              | should also be specified to
+		|              | enable caching. The immutable directive will prevent supported clients 
+		|              | from making conditional requests during the life of the maxAge 
+		|              | option to check if the file has changed.                                      | false    | 4.16+        |
+		+--------------+-------------------------------------------------------------------------------+----------+--------------+
+
+
+all arguments 
+		app.get('/file/:name', function (req, res, next) {
+
+		  var options = {
+		    root: __dirname + '/public/',
+		    dotfiles: 'deny',
+		    headers: {
+		        'x-timestamp': Date.now(),
+		        'x-sent': true
+		    }
+		  };
+
+		  var fileName = req.params.name;
+		  res.sendFile(fileName, options, function (err) {
+		    if (err) {
+		      next(err);
+		    } else {
+		      console.log('Sent:', fileName);
+		    }
+		  });
+
+		});
+
+E-> although express is serving static files here if you have a server side code moving things around, there can be a dynamaic concept applied 		
+file:/response_methods/response_methods.js	
+
+preventing use of some files
+
+app.get('/sendFile/:name', function (req, res, next) {
+
+    var name = req.params.name
+    mayViewFilesFrom(   name,res   )
+    
+});
+
+    function  mayViewFilesFrom (yes, response){
+      if (yes == "a.txt") {
+        response.sendFile(__dirname + "/" + yes);
+      } 
+
+      else {
+        response.status(403).send("Sorry! You can't see that.");
+      }
+    }
+E-> the given example does not work    
+file:/response_methods/response_methods.js	
+
+
+res.sendStatus
+some status codes 
+		res.sendStatus(200); // equivalent to res.status(200).send('OK')
+		res.sendStatus(403); // equivalent to res.status(403).send('Forbidden')
+		res.sendStatus(404); // equivalent to res.status(404).send('Not Found')
+		res.sendStatus(500); // equivalent to res.status(500).send('Internal Server Error')
+
+
+
 
 
                               E -> X -> P -> R -> E -> S -> S ->
