@@ -4,6 +4,13 @@ https://www.w3schools.com/nodejs/met_path_join.asp
 
 E-> are tips
 
+
+E -> X -> P -> R -> E -> S -> S ->
+                              E -> X -> P -> R -> E -> S -> S ->
+														E -> X -> P -> R -> E -> S -> S ->
+																					E -> X -> P -> R -> E -> S -> S ->														
+
+
 E -> X -> P -> R -> E -> S -> S ->
 
 to setup up a node environment with an express dependency
@@ -154,6 +161,54 @@ to match for butterfly and dragonfly, but not butterflyman, dragonflyman
 file: /routing_basic/root_dir.js				
 														E -> X -> P -> R -> E -> S -> S ->
 
+Route parameters														
+varables in paths 
+
+
+any dir in a path that starts wit a ':' is a variable filled when the user or script makes a GET request to the express app
+		app.get('/users/:userId/books/:bookId', function (req, res) {  
+		  res.send(req.params)
+		})		
+				Route path: /users/:userId/books/:bookId
+				Request URL: http://localhost:3000/users/34/books/8989
+				would return req.params: { "userId": "34", "bookId": "8989" }
+file: /routing_basic/routing_params/params.js
+
+
+using  hyphen (-) 
+		app.get('/flights/:from-:to', function (req, res) {  
+		  res.send(req.params)
+		})	
+				Route path: /flights/:from-:to
+				Request URL: http://localhost:3000/flights/LAX-SFO
+				req.params: { "from": "LAX", "to": "SFO" }
+file: /routing_basic/routing_params/params.js						
+
+
+dot (.)
+		app.get('/plantae/:genus.:species', function (req, res) {  
+		  res.send(req.params)
+		})	
+				Route path: /plantae/:genus.:species
+				Request URL: http://localhost:3000/plantae/Prunus.persica
+				req.params: { "genus": "Prunus", "species": "persica" }
+file: /routing_basic/routing_params/params.js						
+
+E-> so we see a dir does not to need to literally exist in order for certain actions to be done
+
+
+use a parentheses for regex 
+		app.get('/user/:userId(\\d+)', function (req, res) {  
+		  res.send(req.params)
+		})	
+				Route path: /user/:userId(\\d+)
+				Request URL: http://localhost:3000/user/42
+				req.params: {"userId": "42"}
+file: /routing_basic/routing_params/params.js	
+
+E-> in order to make a regex match you must escape any regex literals such as \w \d withe the '\' ' symbol
+E->In Express 4.x, the * character in regular expressions is not interpreted in the usual way. As a workaround, use {0,} instead of *. 
+This will likely be fixed in Express 5.
 
 
 
