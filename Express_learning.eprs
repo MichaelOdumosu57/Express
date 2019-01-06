@@ -214,3 +214,148 @@ This will likely be fixed in Express 5.
 
 
 																					E -> X -> P -> R -> E -> S -> S ->
+Route handlers				
+
+there are multi request handling callbacks when give a wider functionality
+		app.get('/example/b', function (req, res, next) {
+		  console.log('the response will be sent by the next function ...')
+		  next()
+		}, function (req, res) {
+		  res.send('Hello from B!')
+		})
+file: routing_basic/multi_routing/multi_routing.js		
+
+E-> to include a var in a tilde string (especially on servers) use ${}
+
+
+An array of callback functions can handle a route.
+		var cb0 = function (req, res, next) {
+		  console.log('CB0')
+		  next()
+		}
+
+		var cb1 = function (req, res, next) {
+		  console.log('CB1')
+		  next()
+		}
+
+		var cb2 = function (req, res) {
+		  res.send('Hello from C!')
+		}
+
+		app.get('/example/c', [cb0, cb1, cb2])
+file: routing_basic/multi_routing/multi_routing.js		
+
+
+A combination of independent functions and arrays of functions can handle a route. For example:
+
+		var cb0 = function (req, res, next) {
+		  console.log('CB0')
+		  next()
+		}
+
+		var cb1 = function (req, res, next) {
+		  console.log('CB1')
+		  next()
+		}
+
+		app.get('/example/d', [cb0, cb1], function (req, res, next) {
+		  console.log('the response will be sent by the next function ...')
+		  next()
+		}, function (req, res) {
+		  res.send('Hello from D!')
+		})
+
+
+file: routing_basic/multi_routing/multi_routing.js		
+
+E-> can only use res.send once in these multi routing function calls 	
+
+
+E -> X -> P -> R -> E -> S -> S ->
+
+Response methods
+how the express app responds when it gets a client request
+
+if a Response method is not called from a route handler, the client request will be left hanging.
+		app.get('/hang_request', function (req, res, next) {
+		  //no response method  
+		})
+				so it will be constantly loading or a timer will be availble in the client to let the user know a resource is not available
+				if the daemon quits then the client responds with a message to the user 
+file:/response_methods/response_methods.js
+
+res.download()
+		to download a file 
+				res.download('/report-12345.pdf');
+
+		if the first is missing it throws an error however if the first is present it downloads the second only
+				res.download('/report-12345.pdf', '/report.pdf');
+
+		download error handler 
+				res.download('/report-12345.pdf', 'report.pdf', function(err){
+					  if (err) {
+					    // Handle error, but keep in mind the response may be partially-sent
+					    // so check res.headersSent
+					  } 
+					  else {
+					    // decrement a download credit, etc.
+					  }
+				});
+
+		app.get('/download', function (req, res) {
+				res.download("[file]")
+		})
+file:/response_methods/response_methods.js
+
+
+
+res.end([data] [, encoding])
+Use to quickly end the response without any data. I
+	res.end();
+	this leaves the user with a blank page
+	res.status(404).end();
+file:/response_methods/response_methods.js
+
+
+E-> use res.status to learn about many HTTP  response protocol 403  is authorization protocol
+
+
+res.json()
+Sends a JSON response. This method sends a response (with the correct content-type) 
+that is the parameter converted to a JSON string using JSON.stringify().
+The parameter can be any JSON type, including object, array, string, Boolean, number, or null, 
+jsonp has callback support 
+and you can also use it to convert other values to JSON.
+		res.json(null);
+		res.json({ user: 'tobi' });
+		res.status(500).json({ error: 'message' });
+
+		res.jsonp(null);
+		// => callback(null)
+
+		res.jsonp({ user: 'tobi' });
+		// => callback({ "user": "tobi" })
+
+		res.status(500).jsonp({ error: 'message' });
+		// => callback({ "error": "message" })		
+file:/response_methods/response_methods.js
+
+E-> res.json really returns the data it gets, it doesnt try to modify it
+
+
+res.redirect([status,] path)
+redirect a request
+		res.redirect('/foo/bar');
+		res.redirect('http://example.com');
+		res.redirect(301, 'http://example.com');
+		res.redirect('../login');
+file:/response_methods/response_methods.js		
+
+E-> do  not connect your routes to example.com the system deep links it and can ruin future plans with  your app 
+
+
+
+                              E -> X -> P -> R -> E -> S -> S ->
+														E -> X -> P -> R -> E -> S -> S ->
+																					E -> X -> P -> R -> E -> S -> S ->														
