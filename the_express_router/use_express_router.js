@@ -7,12 +7,9 @@ const fs = require('fs');
 const bodyParser = require('body-parser');
 const multer = require('multer'); // v1.0.5
 const upload = multer(); // for parsing multipart/form-data
+const birds = require('./birds')
 
-app.get('/[sample]', function (req, res, next) {
-});
-
-
-
+app.use('/birds', birds)
 
 
 app.listen(port, () => console.log(`${file_name} app listening on port ${port}!`))

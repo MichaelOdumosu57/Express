@@ -1,6 +1,7 @@
 https://expressjs.com/en/starter/hello-world.html
 https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods
 https://www.w3schools.com/nodejs/met_path_join.asp
+https://expressjs.com/en/api.html#req.body
 
 E-> are tips
 
@@ -481,6 +482,45 @@ helps when writing too many route handlers
 		  .put(function (req, res) {
 		    res.send('Update the book')
 		  })
-file: /route_handler_handler/route_handler_handler.js		                                     
+file: /route_handler_handler/route_handler_handler.js	
+
+
+E-> use this function when dealing with a Converting circular structure to JSON error
+		const getCircularReplacer = () => {
+		  const seen = new WeakSet();
+		  return (key, value) => {
+		    if (typeof value === "object" && value !== null) {
+		      if (seen.has(value)) {
+		        return;
+		      }
+		      seen.add(value);
+		    }
+		    return value;
+		  };
+		};	          
+		JSON.stringify([circular object], getCircularReplacer());   
+file: /route_handler_handler/get_req_message.js			 
+
 														E -> X -> P -> R -> E -> S -> S ->
+express.Router
+might have to use this to communicate with databases		
+when you have project purposes for express  and you have a mega project instead of making a mega app 
+you can make you own modular apps with the express.Router function, which allows you to pick and choose your "sub"-Router
+and save time rewriting huge picecs of code, make sure they are intrgratedabebly sound!!
+
+
+for the routing module 
+var express = require('express')
+var router = express.Router()	
+		replace app with router it works just the same with all methods but investigate to make sure 
+				at the end of your express Router
+				module.exports = router	
+						then load the router in the express app 
+								var custom_router = require('./custom_router')
+								...
+								app.use('/custom_router', custom_router)	
+										this will handle anythings related to the "/custom_router" path entered by the user 
+										you need to use "/custom_router" with your requests to acccess and activate the router
+E-> think of the router as the hand but the app as the brains that what it really is
+directory:/the_express_router run :use_express_router.js														
 																					E -> X -> P -> R -> E -> S -> S ->														
