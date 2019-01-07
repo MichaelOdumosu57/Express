@@ -468,5 +468,19 @@ some status codes
 
 
                               E -> X -> P -> R -> E -> S -> S ->
+
+app.route ()
+helps when writing too many route handlers 
+		app.route('/book')
+		  .get(function (req, res) {
+		    res.send('Get a random book')
+		  })
+		  .post(function (req, res) {
+		    res.send('Add a book')
+		  })
+		  .put(function (req, res) {
+		    res.send('Update the book')
+		  })
+file: /route_handler_handler/route_handler_handler.js		                                     
 														E -> X -> P -> R -> E -> S -> S ->
 																					E -> X -> P -> R -> E -> S -> S ->														
