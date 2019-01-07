@@ -1,7 +1,8 @@
 https://expressjs.com/en/starter/hello-world.html
 https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods
 https://www.w3schools.com/nodejs/met_path_join.asp
-https://expressjs.com/en/api.html#req.body
+https://expressjs.com/en/api.html#req
+https://github.com/senchalabs/connect#middleware
 
 E-> are tips
 
@@ -522,5 +523,141 @@ var router = express.Router()
 										this will handle anythings related to the "/custom_router" path entered by the user 
 										you need to use "/custom_router" with your requests to acccess and activate the router
 E-> think of the router as the hand but the app as the brains that what it really is
-directory:/the_express_router run :use_express_router.js														
+directory:/the_express_router run :use_express_router.js										
+
+
+
 																					E -> X -> P -> R -> E -> S -> S ->														
+
+Writing middleware for use in Express apps
+Middleware functions are functions that have access to the request object (req),
+ the response object (res), and the next function in the application’s request-response cycle
+		If the current middleware function does not end the request-response cycle, 
+		it must call next() to
+		 pass control to the next middleware function. 
+		Otherwise, the request will be left hanging. 
+
+what middleware looks like
+		var myMiddleware = function (req, res, next) {
+		  console.log('Middleware')
+		  next()
+		}
+			to load it
+				app.use(myMiddleware)
+						to run it it needs to be loaded before a http method of an express app triggered by request
+
+using middleware
+		var express = require('express')
+		var app = express()
+
+		var myLogger = function (req, res, next) {
+		  console.log('LOGGED')
+		  next()
+		}
+
+		app.use(myLogger)
+
+		app.get('/', function (req, res) {
+		  res.send('Hello World!')
+		})
+
+		app.listen(3000)		
+file: /middleware/basic_middleware.js
+E-> the middleware must be loaded before the apps http method call 
+
+E -> X -> P -> R -> E -> S -> S ->
+Configurable middleware
+some times you dont want your app to be static loading everything it needs when production needs one router or middleware
+to solve that use this middleware config purpose 
+		
+		
+		module.exports = function(options) {
+		  return function(req, res, next) {
+		    if(options.option1 == "1"){
+		    	console.log(" reacting")
+		    }
+		    if(options.option2 == "2"){
+		    	console.log(" reacting some more")
+		    }	
+		    next()
+		  }
+		}
+		file:/middleware/my-middleware.js
+
+
+				in the app
+				var mw = require('./my-middleware.js')
+				app.use(mw({ option1: '1', option2: '2' }))
+file: /middleware/config_middleware.js
+
+
+                              E -> X -> P -> R -> E -> S -> S ->
+Using middleware
+	Application middleware 
+to send a req to the next route
+		app.get('/:id', function (req, res, next) {
+		  // if the user ID is 0, skip to the next route
+		  if (req.params.id === '0') next('route')
+		  // otherwise pass the control to the next middleware function in this stack
+		  else next()
+		}, function (req, res, next) {
+		  // send a regular response
+		  res.send('regular')
+		})
+
+		// handler for the /user/:id path, which sends a special response
+		app.get('/:id', function (req, res, next) {
+		  res.send('special')
+		})	
+file:/application/application.js
+
+	Router middleware
+to apply a route to all HTTP methods on an express router use its use method
+		router.use('/user/:id', function (req, res, next) {
+		  console.log('Request URL:', req.originalUrl)
+		  next()
+		}, function (req, res, next) {
+		  console.log('Request Type:', req.method)
+		  next()
+		})
+file:/the_express_router/birds.js
+
+
+to skip a router after a condition use  next('router')
+		router.use(function (req, res, next) {
+		  if (!req.headers['x-auth']) return next('router')
+		  next()
+		})
+
+		router.get('/', function (req, res) {
+		  res.send('hello, user!')
+		})
+
+		// use the router and 401 anything falling through
+		app.use('/admin', router, function (req, res) {
+		  res.sendStatus(401)
+		})
+E -> very very useful for securing access to your work if someone gets their hands on your computer		
+file:/the_express_router/router_skip.js
+
+
+		Error-handling middleware
+				Must use four parameters
+
+app.use(function (err, req, res, next) {
+  console.error(err.stack)
+  res.status(500).send('Something broke!')
+})			
+
+		Built-in middleware	
+				Starting with version 4.x, Express no longer depends on Connect. The middleware functions 
+				that were previously included with Express are now in separate modules; see the list of middleware functions.
+
+		Third-party middleware
+				npm? you know how to do that a list 
+				https://github.com/senchalabs/connect#middleware
+
+
+														E -> X -> P -> R -> E -> S -> S ->
+																					E -> X -> P -> R -> E -> S -> S ->	
+

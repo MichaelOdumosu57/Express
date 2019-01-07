@@ -7,13 +7,14 @@ const fs = require('fs');
 const bodyParser = require('body-parser');
 const multer = require('multer'); // v1.0.5
 const upload = multer(); // for parsing multipart/form-data
-const birds = require('./birds')
-const router_skip = require('./router_skip')
+const mw = require('./my-middleware.js')
 
 
-app.use('/birds', birds)
-app.use('/router_skip', router_skip, function (req, res) {
-  res.sendStatus(401)
-})
+app.use(mw({ option1: '1', option2: '3' }))
+
+app.get('/', function (req, res, next) {
+	res.send("config'd middleware! cool")
+});
+
 
 app.listen(port, () => console.log(`${file_name} app listening on port ${port}!`))
