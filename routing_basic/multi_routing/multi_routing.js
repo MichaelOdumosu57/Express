@@ -47,4 +47,16 @@ app.get('/example/d', [cb0, cb1], function (req, res, next) {
 })
 
 
+app.get('/example/e', [cb0, cb1], function (req, res, next) {
+  console.log('the response will be sent by the next function ...')
+  next()
+}, function (req, res,next) {
+  console.log('hold on')
+    next()
+}, function (req, res) {
+  res.send('Hello from E!')
+})
+
+
+
 app.listen(port, () => console.log(`${file_name} app listening on port ${port}!`))

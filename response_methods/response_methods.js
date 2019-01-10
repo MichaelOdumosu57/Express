@@ -60,6 +60,9 @@ app.get('/redirects', function (req, res, next) {
     res.redirect('redir/');
 });
 
+app.get("/redir",function(req,res,next){
+    res.send("redirected!!")
+})
 
 
 
@@ -70,7 +73,7 @@ app.get('/set', function (req, res, next) {
     // res.send('<h1>paragraph</h1>'); 
     // res.set({
     //   'Content-Type': 'text/plain',
-    //   'Content-Length': '1',
+    //   
       
     // });
     res.send('<h1>paragraph</h1>');             

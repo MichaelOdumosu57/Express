@@ -10,9 +10,27 @@ const upload = multer(); // for parsing multipart/form-data
 const compression = require('compression')
 app.use(compression())
 
+
+
+
+app.use(function ( req, res, next) {
+  res.send("the promise caught the error, its a database computing problem but for this error there is no queryDb")
+})
+
 app.get('/', function (req, res, next) {
-	res.send("HEllo world")
-});
+  // do some sync stuff
+  queryDb()
+    .then(function (data) {
+      // handle data
+      return makeCsv(data)
+    })
+    .then(function (csv) {
+      res.send("completed db computing heres what you need client ")
+    })
+    .catch(next)
+})
+
+
 
 
 

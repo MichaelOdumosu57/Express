@@ -53,30 +53,46 @@ HANDLER is the function executed when the route is matched.
 
 METHOD 
 		GET
-		The GET method requests a representation of the specified resource. Requests using GET should only retrieve data and should have no other effect.
+		The GET method requests a representation of the specified resource. 
+		Requests using GET should only retrieve data and should have no other effect.
 		HEAD
-		The HEAD method retrieves meta-information written in response headers without the response body., without having to transport the entire content.
+		The HEAD method retrieves meta-information written in response headers without the response body.,
+		 without having to transport the entire content.
 		POST
-		its giving an object data tot the server
+		its giving an object data to the server
 		PUT
-		modifes existing resources if target resources is there for the changes client side or makes a new one if target reosurce is not present in server side  
+		modifes existing resources if target resources is there for the changes 
+		client side or makes a new one if target reosurce is not present in server side  
 		DELETE
 		The DELETE method deletes the specified resource.
 		TRACE
-		The TRACE method echoes the received request so that a client can see what (if any) changes or additions have been made by intermediate servers.
+		The TRACE method echoes the received request so that a client can see 
+		what (if any) changes or additions have been made by intermediate servers.
 		OPTIONS
-		The OPTIONS method returns the HTTP methods that the server supports for the specified URL. This can be used to check the functionality of a web server by requesting '*' instead of a specific resource.
+		The OPTIONS method returns the HTTP methods that the server supports for the specified URL.
+		 This can be used to check the functionality of a web server by requesting '*' instead of a specific resource.
 		CONNECT
-		[25] The CONNECT method converts the request connection to a transparent TCP/IP tunnel, usually to facilitate SSL-encrypted communication (HTTPS) through an unencrypted HTTP proxy.[26][27] See HTTP CONNECT method.
+		[25] The CONNECT method converts the request connection to a transparent TCP/IP tunnel, 
+		usually to facilitate SSL-encrypted communication (HTTPS) through an unencrypted HTTP proxy.
+		[26][27] See HTTP CONNECT method.
+
 		PATCH
 		The PATCH method applies partial modifications to a resource.[28]
 
-				All general-purpose HTTP servers are required to implement at least the GET and HEAD methods, and all other methods are considered optional by the specification.[29]
+				All general-purpose HTTP servers are required to implement at least the GET and HEAD methods, 
+				and all other methods are considered optional by the specification.[29]
 
 						Safe methods
-						Some of the methods (for example, HEAD, GET, OPTIONS and TRACE) are, by convention, defined as safe, which means they are intended only for information retrieval and should not change the state of the server.
+						Some of the methods (for example, HEAD, GET, OPTIONS and TRACE) are, 
+						by convention, defined as safe, which means they are intended only for
+						 information retrieval and should not change the state of the server.
 
-						By contrast, methods such as POST, PUT, DELETE and PATCH are intended for actions that may cause side effects either on the server, or external side effects such as financial transactions or transmission of email. Such methods are therefore not usually used by conforming web robots or web crawlers; some that do not conform tend to make requests without regard to context or consequences.
+						By contrast, methods such as POST, PUT, DELETE and PATCH are intended for
+						 actions that may cause side effects either on the server, or external 
+						 side effects such as financial transactions or transmission of email. 
+						 Such methods are therefore not usually used by conforming web robots or web crawlers;
+						  some that do not conform tend to make requests without regard to context or consequences.
+
 
 
 E -> X -> P -> R -> E -> S -> S ->
@@ -283,7 +299,8 @@ if a Response method is not called from a route handler, the client request will
 		app.get('/hang_request', function (req, res, next) {
 		  //no response method  
 		})
-				so it will be constantly loading or a timer will be availble in the client to let the user know a resource is not available
+				so it will be constantly loading or a timer will be availble in the client to
+				 let the user know a resource is not available
 				if the daemon quits then the client responds with a message to the user 
 file:/response_methods/response_methods.js
 
@@ -609,7 +626,7 @@ to send a req to the next route
 		app.get('/:id', function (req, res, next) {
 		  res.send('special')
 		})	
-file:/application/application.js
+file:/middleware/application/application.js
 
 	Router middleware
 to apply a route to all HTTP methods on an express router use its use method
@@ -706,7 +723,8 @@ Writing error handlers
 		  res.status(500).send('Something broke!')
 		})			
 
-E-> it seems that using 4 paramaters with these express http methods is not allowed anymore, its best if you use try catch 
+E-> it seems that using 4 paramaters with these express http methods is not allowed anymore, its best if you find the async callback method 
+
 
 																					E -> X -> P -> R -> E -> S -> S ->	
 
@@ -742,9 +760,95 @@ you need the database there in order for things to work
 
 
                               E -> X -> P -> R -> E -> S -> S ->
+Best performance practices 
+
+Use gzip compression
+	var compression = require('compression')
+	var express = require('express')
+	var app = express()
+	app.use(compression())	
+		file:template_app.js
+
+				for high traffic websites its best to do gzip in a reverse proxy --> NGINX :))
+
+Don’t use synchronous functions
+	If you are using Node.js 4.0+ or io.js 2.1.0+, you can use the 	--trace-sync-io command-line flag 
+	to print a warning and a stack trace whenever your application uses a synchronous API.
+		dont use the flag in production
+
+Do logging correctly
+	if you use console.log or console.error pipe the output to another program to avoid synchronous activity 
+	also use the special debug module to control which messages are sent to console.err (what part of the program you want
+		to debug )
+
+For app activity
+
+	If you’re logging app activity (for example, tracking traffic or API calls),
+	 instead of using console.log(), use a logging library like Winston or Bunyan. 
+	 For a detailed comparison of these two libraries, see the StrongLoop blog post 
+	 Comparing Winston and Bunyan Node.js Logging.
+
+Handle exceptions properly
+	
+	node apps crash when the run into an uncaught exception
+
+
+		What not to do
+			dont listen for the uncaughtException event, this will modify the node proccess so that it will continue
+			 to run and become unpreditcable to your system resources and probably unresponisve to your system manager
+			 you dont want the second one in production
+			 		crashing and restarting is sometimes the most reliable way to recover from an error
+			 		don't use domains ' it generally does not solve the problem 
+
+			 				dont use try throw catch with asynchronous code use only for synchronous code, if you need to
+			 				throw an error use console.error, it will handle properly  
+
+
+		 Use promises	
+		 		Promises will handle any exceptions (both explicit and implicit) in asynchronous 
+		 		code blocks that use then(). 
+		 		Just add .catch(next) to the end of promise chains.		
+					app.get('/', function (req, res, next) {
+					  // do some sync stuff
+					  queryDb()
+					    .then(function (data) {
+					      // handle data
+					      return makeCsv(data)
+					    })
+					    .then(function (csv) {
+					      // handle csv
+					    })
+					    .catch(next)
+					})
+
+					app.use(function (err, req, res, next) {
+					  // handle error
+					})			 				
+		 			all async code must return promises if they do not convert the base object 
+		 			using a helper function like Bluebird.promisifyAll().  
+		 			Event emitters (like streams) can still cause uncaught exceptions. 
+		 			handle properly like this 
+
+								const wrap = fn => (...args) => fn(...args).catch(args[2])
+
+								app.get('/', wrap(async (req, res, next) => {
+								  let company = await getCompanyById(req.query.id)
+								  let stream = getLogoStreamById(company.id)
+								  stream.on('error', next).pipe(res)
+								}))		 			
+
+	 			
+		file: performance_practices/promise_error_handler.js
+E-> be careful for promise catching software it can listen for routes its not supposed to try not to use this 		
+
+
+
+
+
+
 														E -> X -> P -> R -> E -> S -> S ->
 																					E -> X -> P -> R -> E -> S -> S ->	
 
-
+Set NODE ENV to production   
 
 
