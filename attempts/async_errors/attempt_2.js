@@ -16,7 +16,7 @@ app.get('/', function (  req, res, next) {
     
   
   
-    // throw new Error("handle me Im a dangerous uncaught exception")
+    handle me im a dangeours uncaught syntax exception
     console.log("i just sent this wasnt  an error here ")
     next()
 

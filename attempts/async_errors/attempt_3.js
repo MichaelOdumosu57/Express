@@ -26,7 +26,7 @@ app.get('/', function (  req, res, next) {
     
   
   
-    // throw new Error("handle me Im a dangerous uncaught exception")
+    handle me Im a dangerous uncaught exception
     console.log("i just sent this wasnt  an error here ")  
     // res.send("I should send even if there is no error ")
     next()

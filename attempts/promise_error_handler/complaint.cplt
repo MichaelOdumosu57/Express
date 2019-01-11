@@ -1,0 +1,55 @@
+System: Linux Ubuntu 16.04.5 Xenial
+System Architecture: amd64
+node -v 10.15.0
+express 4.16.4
+
+
+
+
+description: promises error handlers are not responding correctly 
+
+attempt scripts: all of them
+
+command: node [attempt_script]
+run command inside directory of attempt script (althogh this should not matter)
+
+
+
+
+
+path to attempts: /EXPRESS/attempts/promise_error_handler
+
+file sturture 
+
+EXPRESS/ 
+ 
+package.json   package-lock.json    attepmts 					
+
+
+node_modules/
+  accepts        compressible         core-util-is  escape-html   iconv-lite        
+   mime        
+  negotiator   proxy-addr       send            type-is
+  append-field   compression          debug         etag          inherits          
+   mime-db     
+  object-assign         qs               serve-static    unpipe
+  array-flatten  concat-stream        depd          express       ipaddr.js          
+  mime-types  on-finished           range-parser     setprototypeof  util-deprecate
+  body-parser    content-disposition  destroy       finalhandler  isarray            
+  minimist    on-headers            raw-body         statuses        utils-merge
+  buffer-from    content-type         dicer         forwarded     media-typer       
+   mkdirp      parseurl              readable-stream  streamsearch    vary
+  busboy         cookie               ee-first      fresh         merge-descriptors 
+   ms          path-to-regexp        safe-buffer      string_decoder  xtend
+  bytes          cookie-signature     encodeurl     http-errors   methods           
+   multer      process-nextick-args  safer-buffer     typedarray
+
+
+ attempts/
+ 
+ promise_error_handler/  
+
+attempt_1.js
+attempt_2.js
+attempt_3.js
+solution.js
