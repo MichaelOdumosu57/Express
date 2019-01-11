@@ -3,6 +3,19 @@ const express = require('express')
 const app = express()
 const port = 3000
 const file_name = __filename.split("/")[__filename.split("/").length-1].split(".js")[0]
+    const getCircularReplacer = () => {
+      const seen = new WeakSet();
+      return (key, value) => {
+        if (typeof value === "object" && value !== null) {
+          if (seen.has(value)) {
+            return;
+          }
+          seen.add(value);
+        }
+        return value;
+      };
+    };            
+     
 
 app.get('/example/b', function (req, res, next) {
   console.log('the response will be sent by the next function ...')
@@ -21,11 +34,12 @@ var cb1 = function (req, res, next) {
   next()
 }
 
-var cb2 = function (req, res) {
+var cb2 = function (req, res, next) {
   res.send('Hello from C!')
 }
 
 app.get('/example/c', [cb0, cb1, cb2])
+
 
 
 
@@ -42,19 +56,27 @@ var cb1 = function (req, res, next) {
 app.get('/example/d', [cb0, cb1], function (req, res, next) {
   console.log('the response will be sent by the next function ...')
   next()
-}, function (req, res) {
+}, function (req, res, next) {
   res.send('Hello from D!')
 })
 
 
-app.get('/example/e', [cb0, cb1], function (req, res, next) {
+app.use('/example/e', [cb0, cb1], function (req, res, next) {
   console.log('the response will be sent by the next function ...')
   next()
 }, function (req, res,next) {
   console.log('hold on')
     next()
-}, function (req, res) {
-  res.send('Hello from E!')
+}, function (req, res, next,err  ) {
+
+  err = JSON.stringify(err, getCircularReplacer());
+  res.send(err.message)
+  next()
+}, function (req, res, next) {
+
+
+  res.send(req)
+  
 })
 
 

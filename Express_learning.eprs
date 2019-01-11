@@ -75,7 +75,6 @@ METHOD
 		[25] The CONNECT method converts the request connection to a transparent TCP/IP tunnel, 
 		usually to facilitate SSL-encrypted communication (HTTPS) through an unencrypted HTTP proxy.
 		[26][27] See HTTP CONNECT method.
-
 		PATCH
 		The PATCH method applies partial modifications to a resource.[28]
 
@@ -257,7 +256,7 @@ An array of callback functions can handle a route.
 		  next()
 		}
 
-		var cb2 = function (req, res) {
+		var cb2 = function (req, res, next) {
 		  res.send('Hello from C!')
 		}
 
@@ -280,7 +279,7 @@ A combination of independent functions and arrays of functions can handle a rout
 		app.get('/example/d', [cb0, cb1], function (req, res, next) {
 		  console.log('the response will be sent by the next function ...')
 		  next()
-		}, function (req, res) {
+		}, function (req, res, next) {
 		  res.send('Hello from D!')
 		})
 
@@ -471,7 +470,7 @@ app.get('/sendFile/:name', function (req, res, next) {
         response.status(403).send("Sorry! You can't see that.");
       }
     }
-E-> the given example does not work    
+
 file:/response_methods/response_methods.js	
 
 
@@ -540,6 +539,7 @@ var router = express.Router()
 										this will handle anythings related to the "/custom_router" path entered by the user 
 										you need to use "/custom_router" with your requests to acccess and activate the router
 E-> think of the router as the hand but the app as the brains that what it really is
+E-> when you use app.use on a router the path you give as the first parameter must be included before using the Router's own paths'
 directory:/the_express_router run :use_express_router.js										
 
 
@@ -551,7 +551,7 @@ Middleware functions are functions that have access to the request object (req),
  the response object (res), and the next function in the application’s request-response cycle
 		If the current middleware function does not end the request-response cycle, 
 		it must call next() to
-		 pass control to the next middleware function. 
+		pass control to the next middleware function. 
 		Otherwise, the request will be left hanging. 
 
 what middleware looks like
@@ -627,9 +627,10 @@ to send a req to the next route
 		  res.send('special')
 		})	
 file:/middleware/application/application.js
+E-> if express complains about several res.send calls, use a route to fix things
 
 	Router middleware
-to apply a route to all HTTP methods on an express router use its use method
+to apply a route to all HTTP methods on an express router use its 'use' method
 		router.use('/user/:id', function (req, res, next) {
 		  console.log('Request URL:', req.originalUrl)
 		  next()
@@ -660,11 +661,10 @@ file:/the_express_router/router_skip.js
 
 		Error-handling middleware
 				Must use four parameters
+						determine if your method is sync  (use try catch throw) 
+						or async go to async_error_handle.js it works
+						file:async_error_handle.js
 
-app.use(function (err, req, res, next) {
-  console.error(err.stack)
-  res.status(500).send('Something broke!')
-})			
 
 		Built-in middleware	
 				Starting with version 4.x, Express no longer depends on Connect. The middleware functions 
@@ -685,7 +685,10 @@ Error handling
 				If you pass anything to the next() function (except the string 'route'), 
 				Express regards the current request as being an error and will skip 
 				any remaining non-error handling routing and middleware functions.
-						use try catch blocks, you dont want to have to find out node caught your errors
+				it will print whatever is in the next arg to the client and to stdout, 
+				E-> if this is javascript it sends it perfectly, so you can use this as a bypass if the receving end can
+				 take it and run it   
+				file: the_express_router/router_skip.js
 
 Use promises to avoid the overhead of the try..
 catch block or when using functions that return promises. For example:	
@@ -694,7 +697,8 @@ this gets the job done
 		  Promise.resolve().then(function () {
 		    throw new Error("BROKEN");
 		  }).catch(next); // Errors will be passed to Express.
-		});				
+		});		
+E-> on this system dont use promises to handle errors, dont use promises for express, dont code with sync code 				
 
 The default error handler 
 	If you pass an error to next() and you do not handle it in a custom error handler, 
@@ -723,7 +727,10 @@ Writing error handlers
 		  res.status(500).send('Something broke!')
 		})			
 
-E-> it seems that using 4 paramaters with these express http methods is not allowed anymore, its best if you find the async callback method 
+E-> error handlers are for async functions that throw errors, if it does not throw an error the error handler callback
+	will be skipped, and your inteneded code for dynamaics will be skipped also. Use a regular function and put them together
+
+file: async_error_handle.js
 
 
 																					E -> X -> P -> R -> E -> S -> S ->	

@@ -28,10 +28,15 @@ app.get('/', function (req, res, next) {
       res.send("completed db computing heres what you need client ")
     })
     .catch(next)
+    
 })
 
 
-
+app.get("/", function (req, res, next) {
+  Promise.resolve().then(function () {
+    throw new Error("BROKEN");
+  }).catch(next); // Errors will be passed to Express.
+}); 
 
 
 

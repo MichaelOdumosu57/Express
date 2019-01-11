@@ -7,14 +7,14 @@ const fs = require('fs');
 const bodyParser = require('body-parser');
 const multer = require('multer'); // v1.0.5
 const upload = multer(); // for parsing multipart/form-data
-const birds = require('./birds')
-const router_skip = require('./router_skip')
+
+app.get('/[sample]', function (req, res, next) {
+	express.json()
+});
 
 
-app.use('/birds', birds)
-app.use('/router_skip', router_skip, function (req, res,next) {
-  res.sendStatus(404)
-})
+
+
 
 
 app.listen(port, () => console.log(`${file_name} app listening on port ${port}!`))

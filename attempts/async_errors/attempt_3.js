@@ -11,16 +11,16 @@ const compression = require('compression')
 app.use(compression())
 
 
-var middleware = function(req,res,next){
-    res.send("no errors lemme continue to do stuff")
-    next()
-}
+app.use(function(err, req,res,next){
 
-var error_handler = function(err,req,res,next){
-    console.log("error_handler")
-    // res.json("error handled you may continue ")
-    next()
-}
+  if(err != null){
+      console.error(err.message)
+  }
+
+      res.send("handled with an async ")  
+
+});
+
 
 app.get('/', function (  req, res, next) {
     
@@ -28,13 +28,14 @@ app.get('/', function (  req, res, next) {
   
     // throw new Error("handle me Im a dangerous uncaught exception")
     console.log("i just sent this wasnt  an error here ")  
+    // res.send("I should send even if there is no error ")
     next()
     
 
     
   
 
-},[error_handler,middleware]);
+});
 
 
 
@@ -42,7 +43,9 @@ app.get('/', function (  req, res, next) {
 app.listen(port, () => console.log(`${file_name} app listening on port ${port}!`))
 
 
-// here the problem is eventually solved taking advatange of the previous attempt facts that if there is not an error in the caller
-//  the error callback is skipped  however according to attempt_1 I ask the maintainer, was that the intended result for problem 1
- // I say keep this solution, it rejects injected error handlers by hackers by simply skipping them and ensures only your error handler
-  // handles the exceptions your code throws
+// here app.use is supposed to wait for the app.get fuction to execute but that just not the case, its as if
+ // the get is a callaback to the use method here
+ 
+ // however if there is no error we have the same problem as attempt_2 where callback with the err argument when its
+  // caller function has no error 
+

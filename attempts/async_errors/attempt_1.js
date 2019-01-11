@@ -7,14 +7,19 @@ const fs = require('fs');
 const bodyParser = require('body-parser');
 const multer = require('multer'); // v1.0.5
 const upload = multer(); // for parsing multipart/form-data
-const birds = require('./birds')
-const router_skip = require('./router_skip')
+const compression = require('compression')
+app.use(compression())
 
 
-app.use('/birds', birds)
-app.use('/router_skip', router_skip, function (req, res,next) {
-  res.sendStatus(404)
-})
+app.use("/",function (err, req, res, next) {
+  console.error(err.stack)
+  res.status(500).send('Something broke!')
+})    
 
 
 app.listen(port, () => console.log(`${file_name} app listening on port ${port}!`))
+
+
+
+// instead we get in the client if accessed from the search bar of a browser 
+// Cannot GET /
