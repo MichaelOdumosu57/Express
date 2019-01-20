@@ -8,32 +8,31 @@ const bodyParser = require('body-parser');
 const multer = require('multer'); // v1.0.5
 const upload = multer(); // for parsing multipart/form-data
 const compression = require('compression')
+const router = express()
 app.use(compression())
 
 
+app.param(['user','id'] ,function(req, res, next, id) {
 
+  // try to get the user details from the User model and attach it to the request object  
+  console.log('CALLED ONLY ONCE with ' + id)
+  next()
 
-var options = {
-  dotfiles: 'ignore',
-  etag: false,
-  extensions: ['txt', 'html'],
-  index: false,
-  maxAge: '1d',
-  fallthrough: false,
-  redirect: false,
-  lastModified:false,
-  redirect:true,
-  setHeaders: function (res, path, stat) {
-    res.set('x-timestamp', Date.now())
-  }
-}
-
-app.use(express.static('public', options))
-app.get('/', function (req, res, next) {
-  res.send("HEllo world")
+},function(err,req,res,next,id){
+	res.send(err)
 });
 
-// to access
-// localhost:3000/[file in public dir]
+app.get('/:user/:id', function (req, res, next) {
+	console.log("you will see the param method react once")
+	next('route')
+});
+
+app.get('/:user/:id', function (req, res, next) {
+	res.send("it reacted once haha")
+});
+
+
+
+
 
 app.listen(port, () => console.log(`${file_name} app listening on port ${port}!`))

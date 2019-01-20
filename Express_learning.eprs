@@ -219,6 +219,9 @@ to match for butterfly and dragonfly, but not butterflyman, dragonflyman
 		app.get(/.*fly$/, function (req, res) {
 		  res.send('/.*fly$/')
 		})	 
+
+		
+	
 file: /routing_basic/root_dir.js				
 														E -> X -> P -> R -> E -> S -> S ->
 
@@ -253,6 +256,8 @@ dot (.)
 				Route path: /plantae/:genus.:species
 				Request URL: http://localhost:3000/plantae/Prunus.persica
 				req.params: { "genus": "Prunus", "species": "persica" }
+
+					
 file: /routing_basic/routing_params/params.js						
 
 E-> so we see a dir does not to need to literally exist in order for certain actions to be done
@@ -1017,5 +1022,50 @@ app.listen(path, [callback])
 	to help it handle requests 
 
 
-			
+app.METHOD(path, callback [, callback ...])
 
+all http methods express supports
+checkout
+copy
+delete
+get
+head
+lock
+merge
+mkactivity
+mkcol
+move
+m-search
+notify
+options
+patch
+post
+purge
+put
+report
+search
+subscribe
+trace
+unlock
+unsubscribe
+
+to use a non http method 
+app['m-search']('/', ()=>{})
+app.all loads even for non http methods 
+
+
+
+
+app.param([name], callback)
+where name is a :param in a app http method path  
+callaback == function(req, res, next, id)
+	if name == string ,param == id 
+		if name == array write like this  
+		name = ['param1','param2']
+			and the callaback is registered for each param in order 
+				app.params is only local to its parent app or router and they are not inherited
+				by children
+
+				app.params only trigger once even if multiple paths match it 
+file : App_object/app_param.js
+	you can also rewrite app.param behavior however this is deprecated 

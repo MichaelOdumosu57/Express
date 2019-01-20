@@ -29,6 +29,8 @@ app.get('/sub_directory', function (req, res) {
 
 app.get(/.*fly$/, function (req, res) {
 	res.send('/.*fly$/')
-})	 		
+})	
+
+
 
 app.listen(port, () => console.log(`root_dir app listening on port ${port}!`))
