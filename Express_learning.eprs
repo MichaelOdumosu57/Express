@@ -113,6 +113,8 @@ to access a subdir
 		app.use('[path location of subdir]', express.static(path.join(__dirname,'[parent_dir....]', '[subdir]')))
 				to use path you must requrie it 
 				var path = require('path');
+		to accces
+			/[path location of subdir]/[file in subdir]
 file:static_serving/serve_diff_dir.js
 
 to serve a html file from the GET request itself
@@ -120,8 +122,50 @@ to serve a html file from the GET request itself
 file:/static_serving/serve_html.js
 
 E-> If you are serving many assets from a directory, use the express.static() middleware function.
+E-> refer to the file  below it helps plenty 
+express.static(root, [options])
 
++--------------+--------------------------------------------------------------------------+----------+--------------+--------------+
+| Property     | Description                                                              | Type     | Default      |Values        |
++--------------+--------------------------------------------------------------------------+----------+--------------+--------------+
+| dotfiles     | Determines how dotfiles (files or directories that begin with a dot “.”) 							 "allow","deny"
+				  are treated. See dotfiles below.(it will not ignore .[directory])       | String   | “ignore”     |"ignore"      |
++--------------+--------------------------------------------------------------------------+----------+--------------+--------------+
+| etag         | Enable or disable etag generation NOTE:
+				 express.static always sends weak ETags.                                  | Boolean  | true         |              | 
++--------------+--------------------------------------------------------------------------+----------+--------------+--------------+
+| extensions   | Sets file extension fallbacks: If a file is not found search for
+				 files with the specified extensions and serve the 1st
+				 . Example: ['html' 'htm'] (if an extension is given it doesnt work )     | Mixed    | false        |              |
++--------------+--------------------------------------------------------------------------+----------+--------------+--------------+
+| fallthrough  | Let client errors fall-through as
+				 unhandled requests otherwise forward a client error. 
+				 this means if a url path is not on the server its handled in express     | Boolean  | true         |              |
++--------------+--------------------------------------------------------------------------+----------+--------------+--------------+
+| immutable    | Enable or disable the immutable directive in the 
+				Cache-Control response header. If enabled the maxAge option 
+				should also be specified to enable caching. 
+				The immutable directive will prevent
+				 supported clients from making conditional 
+				requests during the life of the maxAge option to
+				 check if the file has changed.                                            | Boolean  | false        |              |
++--------------+---------------------------------------------------------------------------+----------+--------------+--------------+
+| index        | Sends the specified directory index file. 
+				 Set to false to disable directory indexing. cannot be true                | Mixed    | “index.html” |              | 
++--------------+---------------------------------------------------------------------------+----------+--------------+--------------+
+| lastModified | Set the Last-Modified header to the last
+				 modified date of the file on the OS.                                      | Boolean  | true         |              |
++--------------+---------------------------------------------------------------------------+----------+--------------+--------------+
+| maxAge       | Set the max-age property of the 
+				 Cache-Control header in milliseconds or a string in ms format.            | Number   | 0            |              |
++--------------+---------------------------------------------------------------------------+----------+--------------+--------------+
+| redirect     | Redirect to trailing “/” when the pathname is a directory.                | Boolean  | true         |              |
++--------------+---------------------------------------------------------------------------+----------+--------------+--------------+
+| setHeaders   | Function for setting HTTP headers to serve with the file.
+				 fn(res -- res obj, path --path to file, stat --fs.stats obj)              | Function |              |              |
++--------------+---------------------------------------------------------------------------+----------+--------------+--------------+
 
+file : EXPRESS/static_serving/express_static.js
                               E -> X -> P -> R -> E -> S -> S ->
 
 Route paths
@@ -307,7 +351,7 @@ res.download()
 		to download a file 
 				res.download('/report-12345.pdf');
 
-		if the first is missing it throws an error however if the first is present it downloads the second only
+		the second argument renames the files on download
 				res.download('/report-12345.pdf', '/report.pdf');
 
 		download error handler 
@@ -329,7 +373,7 @@ file:/response_methods/response_methods.js
 
 
 res.end([data] [, encoding])
-Use to quickly end the response without any data. I
+Use to quickly end the response without any data. 
 	res.end();
 	this leaves the user with a blank page
 	res.status(404).end();
@@ -449,7 +493,9 @@ all arguments
 
 		});
 
-E-> although express is serving static files here if you have a server side code moving things around, there can be a dynamaic concept applied 		
+E -> use this to get around express.static bugs 
+E-> although express is serving static files here if you have a server side code moving things around, 
+	there can be a dynamaic concept applied 		
 file:/response_methods/response_methods.js	
 
 preventing use of some files
@@ -526,7 +572,7 @@ you can make you own modular apps with the express.Router function, which allows
 and save time rewriting huge picecs of code, make sure they are intrgratedabebly sound!!
 
 
-for the routing module 
+for the routing module
 var express = require('express')
 var router = express.Router()	
 		replace app with router it works just the same with all methods but investigate to make sure 
@@ -540,6 +586,25 @@ var router = express.Router()
 										you need to use "/custom_router" with your requests to acccess and activate the router
 E-> think of the router as the hand but the app as the brains that what it really is
 E-> when you use app.use on a router the path you give as the first parameter must be included before using the Router's own paths'
+
++---------------+-------------------------------------+-------------------------------+--------------+
+| Property      | Description                         | Default                       | Availability |
++---------------+-------------------------------------+-------------------------------+--------------+
+| caseSensitive | Enable case sensitivity.            | Disabled by default treating 
+                  doesnt work                          “/Foo” and “/foo” as the same. |              |
++---------------+-------------------------------------+-------------------------------+--------------+
+| mergeParams   | Preserve the req.params values 
+|				|  from the parent router.
+|				| If the parent and the child have 
+|				| conflicting param names the child’s 
+|				| value take precedence.   
+                  always uses the children param      | false                         | 4.5.0+       |
++---------------+-------------------------------------+-------------------------------+--------------+
+| strict        | Enable strict routing.  doenst work | Disabled by default 
+														“/foo” and “/foo/”            |              |
+														are treated the
+														same by the router.
++---------------+-----------------------------------------+---------------------------+--------------+
 directory:/the_express_router run :use_express_router.js										
 
 
@@ -693,11 +758,18 @@ Error handling
 Use promises to avoid the overhead of the try..
 catch block or when using functions that return promises. For example:	
 this gets the job done 	
-		app.get("/", function (req, res, next) {
-		  Promise.resolve().then(function () {
-		    throw new Error("BROKEN");
-		  }).catch(next); // Errors will be passed to Express.
-		});		
+
+app.get("/", function (req, res, next) {
+  Promise.resolve()
+  .then(function(rel){
+      // afaga
+      console.log("some code")
+      res.send("ok")
+  }).catch(next)
+},function (  err, req, res, next) {  
+  res.send("the promise caught the error")
+}); 
+
 E-> on this system dont use promises to handle errors, dont use promises for express, dont code with sync code 				
 
 The default error handler 
@@ -710,14 +782,26 @@ E-> Set the environment variable NODE_ENV to production, to run the app in produ
 if you call the next() while express writes a response to a client and an error occurs  it will close the connection and 
 fail the request 
 
-do this instead
-		function errorHandler (err, req, res, next) {
+do this instead as a callback 
+		function  (err, req, res, next) {
 		  if (res.headersSent) {
-		    return next(err)
+		    return next(err) //fix what needs to be fixed use the 'error' event to further fix things
+		    // hopefully have enough information from the req to make another req and send a fixed res
+		    // or let the client know if something went wrong, refresh the button 
+		  }
+		  else{
+		  		res.redirect([path]) and further redirects till you can use 'error' evebnt tofix the problem
 		  }
 		  res.status(500)
-		  res.render('error', { error: err })
+		  res.render('just reload me', { error: err })
 		} 
+
+ 	add this if its not helping
+
+		res.on('error',function(err){
+			console.log(err)
+		})
+
 
 
 Writing error handlers
@@ -750,6 +834,7 @@ Applications generated by express
 		express sample-app
 			to Debugging	
 				$ DEBUG=sample-app:* node ./bin/www
+		Routers		
 		express http
 		express mail 
 		express express	  	
@@ -815,22 +900,16 @@ Handle exceptions properly
 		 		Promises will handle any exceptions (both explicit and implicit) in asynchronous 
 		 		code blocks that use then(). 
 		 		Just add .catch(next) to the end of promise chains.		
-					app.get('/', function (req, res, next) {
-					  // do some sync stuff
-					  queryDb()
-					    .then(function (data) {
-					      // handle data
-					      return makeCsv(data)
-					    })
-					    .then(function (csv) {
-					      // handle csv
-					    })
-					    .catch(next)
-					})
-
-					app.use(function (err, req, res, next) {
-					  // handle error
-					})			 				
+				app.get("/", function (req, res, next) {
+				  Promise.resolve()
+				  .then(function(rel){
+				      // afaga
+				      console.log("some code")
+				      res.send("ok")
+				  }).catch(next)
+				},function (  err, req, res, next) {  
+				  res.send("the promise caught the error")
+				}); 		 				
 		 			all async code must return promises if they do not convert the base object 
 		 			using a helper function like Bluebird.promisifyAll().  
 		 			Event emitters (like streams) can still cause uncaught exceptions. 
@@ -854,8 +933,89 @@ E-> be careful for promise catching software it can listen for routes its not su
 
 
 														E -> X -> P -> R -> E -> S -> S ->
-																					E -> X -> P -> R -> E -> S -> S ->	
 
 Set NODE ENV to production   
 
+
+																					E -> X -> P -> R -> E -> S -> S ->	
+
+Express Objects
+express.urlencoded([options])
+
+for  urlencoded http requests 
+
+
+E -> X -> P -> R -> E -> S -> S ->	
+Application Object 
+
+you can get the express app like this
+res.app || req.app 
+
+
+app.locals
+	local impt var for the app 
+		if you remove a custom setting in your app, app.locals does not save it 
+FILE:App_object/app_object.js
+
+app.mountpath
+	tells you where your sub path was mounted
+		express.Router() doesnt have thiss
+			if there is more than one mounthpath  an array 
+FILE:App_object/app_mountpath.js		
+
+
+
+
+app.on('mount', callback(parent))
+	.emit() sub-app mount on parent app
+		parent only arg
+			cannot see full parent object in v8 debugger 
+FILE:App_object/app_mountpath.js				
+
+app.all(path, callback [, callback ...])
+		This method is like the standard app.METHOD() methods it matches all HTTP verbs.
+			app.all('*', requireAuthentication, loadUser);
+				means everything that has to go through that middleware before it can continue 
+			app.all('/api/*', requireAuthentication);
+				whitelist functionality
+
+app.delete(path, callback [, callback ...])
+		routes HTTP delete req 
+				app.delete('/', function (req, res) {
+				  res.send('DELETE request to homepage');
+				});						
+
+app.disable(name)
+	same as app.set(name,false)				
+
+
+app.disabled(name)
+	checks if name == false 
+
+
+app.enable(name)
+	same as app.set(name,true)
+
+app.enabled(name)
+	if name == true return true 
+
+app.engine(ext, callback)
+	were not looking at this 
+
+app.get(name)
+	returns appt setting value 		
+FILE:App_object/app_mountpath.js						
+
+app.listen(path, [callback])
+	sets up a UNIX socket and listens for requests there 	
+		same as http.Server.listen().
+
+	app.listen([port[, host[, backlog]]][, callback])
+		no port or omitted the OS will give it an unused port 
+
+	the express() is actually a function passed to node http server 
+	to help it handle requests 
+
+
+			
 

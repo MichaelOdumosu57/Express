@@ -7,14 +7,27 @@ const fs = require('fs');
 const bodyParser = require('body-parser');
 const multer = require('multer'); // v1.0.5
 const upload = multer(); // for parsing multipart/form-data
-const birds = require('./birds')
-const router_skip = require('./router_skip')
+const compression = require('compression')
+const router = express()
+app.use(compression())
+
+app.get('/app/locals', function (req, res, next) {
+	// app.locals.email = 'hey@hmail.com'
+	res.send(app.locals)
+});
 
 
-app.use('/birds/:id', birds)
-app.use('/router_skip', router_skip, function (req, res,next) {
-  res.sendStatus(404)
-})
+
+router.get('/mountpath', function (req, res, next) {
+	// app.locals.email = 'hey@hmail.com'
+	res.send(router.mountpath)
+});
+
+app.use('/router', router); // mount the sub app
+
+
+
+
 
 
 app.listen(port, () => console.log(`${file_name} app listening on port ${port}!`))

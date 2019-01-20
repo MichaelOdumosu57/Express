@@ -17,7 +17,7 @@ app.use(function ( req, res, next) {
   res.send("the promise caught the error, its a database computing problem but for this error there is no queryDb")
 })
 
-app.get('/', function (req, res, next) {
+app.get('/non_existing_promise', function (req, res, next) {
   // do some sync stuff
   queryDb()
     .then(function (data) {
@@ -32,10 +32,16 @@ app.get('/', function (req, res, next) {
 })
 
 
+//how to really handle errors in promises 
 app.get("/", function (req, res, next) {
-  Promise.resolve().then(function () {
-    throw new Error("BROKEN");
-  }).catch(next); // Errors will be passed to Express.
+  Promise.resolve()
+  .then(function(rel){
+      // afaga
+      console.log("some code")
+      res.send("ok")
+  }).catch(next)
+},function (  err, req, res, next) {  
+  res.send("the promise caught the error")
 }); 
 
 

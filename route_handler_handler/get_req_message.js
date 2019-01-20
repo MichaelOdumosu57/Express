@@ -41,56 +41,65 @@ app.route('/book')
     const needed_file = __dirname + '/message.txt'
 
     fs.open(needed_file, 'w+', (err, fd) => {
+
+
         if (err){
+
+
             throw err;
+
+
         } 
 
         else{
-          console.log("file opened")
-        }       
-        try{
-        let buf = Buffer.from(data)
-        pos = 0,offset = 0,
-        len = buf.length;            
+
+
+            console.log("file opened")            
+            let buf = Buffer.from(data)
+            pos = 0,offset = 0,
+            len = buf.length;            
             fs.write(fd, buf, offset, len, pos,
                 (err,bytes,buff) => {
+                if(err){  
+                    fs.close(fd, (err) => {
+                        if (err){
+                            throw err;
+                        } 
+
+                        else{
+                          console.log("file closed")
+                        } 
 
 
+                    });
+                } 
+
+
+                else{  
+                    fs.close(fd, (err) => {
+                        if (err){
+                            throw err;
+                        } 
+
+                        else{
+                          console.log("file closed")
+                        } 
+
+
+                    });
+                }       
+
+                                             
             });     
-        }   
-        catch (err){  
-            fs.close(fd, (err) => {
-                if (err){
-                    throw err;
-                } 
+        
 
-                else{
-                  console.log("file closed")
-                } 
+        }
 
-
-            });   
-        }           
-
-        fs.close(fd, (err) => {
-            if (err){
-                throw err;
-            } 
-
-            else{
-              console.log("file closed")
-            } 
-
-
-        });
 
 
     });
   
 
-  // const des = fs.createWriteStream(needed_file)
-  // des.write( fd,  req   ) 
-  // des.close(fd)
 
   })  
 

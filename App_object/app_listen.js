@@ -7,14 +7,14 @@ const fs = require('fs');
 const bodyParser = require('body-parser');
 const multer = require('multer'); // v1.0.5
 const upload = multer(); // for parsing multipart/form-data
-const birds = require('./birds')
-const router_skip = require('./router_skip')
+const compression = require('compression')
+app.use(compression())
 
 
-app.use('/birds/:id', birds)
-app.use('/router_skip', router_skip, function (req, res,next) {
-  res.sendStatus(404)
-})
+var https = require('https');
+var http = require('http');
 
 
-app.listen(port, () => console.log(`${file_name} app listening on port ${port}!`))
+http.createServer(app).listen(3000);
+// https.createServer(options, app).listen(443);
+// this will work if I only knew what options are

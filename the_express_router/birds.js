@@ -1,7 +1,13 @@
 var express = require('express')
-var router = express.Router()
+var options = {
+	caseSensitive:false,
+	mergeParams:true,
+	strict:true
+}
+var router = express.Router([options])
 
 router.use('/user/:id', function (req, res, next) {
+  console.log(req.params)
   console.log('Request URL:', req.originalUrl)
   next()
 }, function (req, res, next) {

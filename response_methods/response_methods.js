@@ -16,9 +16,10 @@ app.get('/hang_request', function (req, res, next) {
 app.get('/download', function (req, res, next) {
     // res.download(__dirname + '/report-12345.pdf');
     // res.download(__dirname + '/report-12345.pdf',__dirname +  '/report.pdf');
-    res.download('/report-12345.pdf', 'report.pdf', function(err){
+    res.download('report-12345.pdf', 'report.pdf', function(err){
         if (err) {
           // Handle error, but keep in mind the response may be partially-sent
+          console.log(err)
           res.send("I couldnt find the first error")
         } 
         else {
@@ -41,10 +42,10 @@ app.get('/json', function (req, res, next) {
     // res.status(500).json({ error: 'message' });
     // res.json(500)
     // res.json(true)
-    // res.json([1,2,3,4,5])
+    res.json([1,2,3,4,5])
     // res.jsonp(null);
     // res.jsonp({ user: 'tobi' });
-    res.status(500).jsonp({ error: 'message' });
+    // res.status(500).jsonp({ error: 'message' });
              
 });
 
@@ -66,9 +67,26 @@ app.get("/redir",function(req,res,next){
 
 
 
-app.get('/set', function (req, res, next) {
-    // res.set('Content-Type', 'application/json');
-    // res.send('<xml>some html</xml>');  
+app.get('/set/:ids', function (req, res, next) {
+
+    if(req.params.ids == 'json'){
+
+        console.log(req.params)
+        res.set('Content-Type', 'application/json');
+        res.send('<xml>some html</xml>');  
+
+
+    }
+
+
+    else{
+
+
+        res.set('Content-Type', 'text/html');
+        res.send('<h1>paragraph</h1>'); 
+
+
+    }
     // res.set('Content-Type', 'text/html');
     // res.send('<h1>paragraph</h1>'); 
     // res.set({
@@ -76,7 +94,7 @@ app.get('/set', function (req, res, next) {
     //   
       
     // });
-    res.send('<h1>paragraph</h1>');             
+    // res.send('<h1>paragraph</h1>');             
 });
 
 app.get('/sendFile/:name', function (req, res, next) {
