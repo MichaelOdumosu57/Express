@@ -1204,8 +1204,55 @@ req.subdomains
 req.xhr
 	was this a xhr
 		bug does not work with a standalone xhr request
-		
+
 
 			till here
 				file: Req_object/req_app.js	
 
+
+
+Methods 
+
+E-> Provisional headers are shown when you get this that means that the req headers are not updated
+req.accepts 
+	the req accepts the best response if there is an array, 
+		if it takes the one option the app returns it if none are acceptable it retunrs false 
+			this can be a MIME type or an file extension
+FILE: Req_object/accepts_req.js 
+
+req.acceptsCharsets(charset [, ...])
+	if it doesnt accept the charset you get false 
+		array -> first 
+			one -> one  : false 
+				if the req doesnt have a 
+
+req.acceptsEncodings(encoding [, ...])
+	Accept-Encoding field header like gzip deflate bzip
+
+
+req.acceptsLanguages(lang [, ...])
+	if a language is not accepted false 
+
+				till here 
+					FILE: Req_object/accepts_req.js 
+
+req.get(field)
+req.header(field).
+	gets a field in the HTTP header case insensitive
+
+FILE: Req_object/http_header_get_req.js	
+
+
+
+req.is(type)
+	if the req has no body returns null 
+		if the type is wrong it returns false
+FILE:Req_object is_type_req.js
+
+req.range(size[, options])
+	range header parser
+
+	options 
+		combine -- boolean -- default:false --Specify if overlapping & adjacent ranges should be combined
+			undefined so far 
+FILE: Req_object/range_req.js			
