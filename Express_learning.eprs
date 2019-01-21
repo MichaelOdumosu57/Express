@@ -1256,3 +1256,38 @@ req.range(size[, options])
 		combine -- boolean -- default:false --Specify if overlapping & adjacent ranges should be combined
 			undefined so far 
 FILE: Req_object/range_req.js			
+
+
+														E -> X -> P -> R -> E -> S -> S ->
+
+Response
+
+Properties 
+res.app 
+	refers to the express app it belongs too 
+FILE: Res_object/res_app.js 
+
+res.headersSent
+	did the app send http headers for the response 
+FILE: Res_object/headersSent_res.js																
+
+res.locals 
+	An object that contains response 
+	local variables scoped to the request,
+	hence you can see this in the req/res cycle 
+FILE: Res_object/res_locals.js 	
+
+
+Methods
+
+res.append(field [, value])
+res.append() is supported by Express v4.11.0+
+adds value to http response header
+	dont call res.set() or it will reset things
+File: Res_object/append_res.js	
+
+res.attachment([filename])
+	sets res header Content-Disposition = 'attachment'
+		filename.F_OK (lol node fs.access)
+			Content-Type = return res.type('value')
+			 Content-Disposition  =  “filename=” parameter
