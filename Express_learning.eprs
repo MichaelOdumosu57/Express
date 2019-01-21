@@ -220,7 +220,7 @@ to match for butterfly and dragonfly, but not butterflyman, dragonflyman
 		  res.send('/.*fly$/')
 		})	 
 
-		
+
 	
 file: /routing_basic/root_dir.js				
 														E -> X -> P -> R -> E -> S -> S ->
@@ -1069,3 +1069,143 @@ callaback == function(req, res, next, id)
 				app.params only trigger once even if multiple paths match it 
 file : App_object/app_param.js
 	you can also rewrite app.param behavior however this is deprecated 
+
+
+app.render(view, [locals], callback)
+	just like res.render but it cannot send the result to the client 
+
+
+app.route(path)
+	if you dont want app.all use app.route 
+		was discussed earlier 
+
+app.set(name, value)
+	for the server or you be careful some values are for the server 
+		sub-app do not inheirt names with a default value, you must provide these in the sub app 
+			it will inherit settings with no default value 
+				exceptions 
+				they inherit 'trust proxy' 
+				no inherit 'view cache' while(NODE_ENV == 'production')
+					go to site to see table 
+				set the x-powered-by express to false in your apps 
+file: App_object/app_get_set.js
+
+app.use([path,] callback [, callback...])
+	matches all sub paths as well
+		FILE: the_express_router
+			http get localhost:3000/birds/about/3241/var works 
+	the path can be an array 
+	['/abcd', '/xyza', /\/lmn|\/pqr/]
+		will match `/abcd`, `/xyza`, `/lmn`, and `/pqr`
+
+app object tips 
+	precedence to public 1st 
+		app.use(express.static(__dirname + '/public'));
+		app.use(express.static(__dirname + '/files'));
+		app.use(express.static(__dirname + '/uploads'));
+
+					E -> X -> P -> R -> E -> S -> S ->
+
+Request the request object a.k.a req 
+	
+req.app
+	the express application behind the req 
+file: Req_object/req_app.js
+
+req.baseUrl
+	the path the router instance is matched on different from app.mounthpath
+file: Req_object/req_baseUrl.js		
+
+req.body
+	use the readStream functionality to get it 
+file: Req_object/req_app.js
+
+req.cookies
+	if the req contains cookies you will see them here 	
+file: Req_object/req_app.js	
+
+req.fresh
+	It is true if the cache-control request header doesn’t have a no-cache directive and any of the following are true:
+
+		The if-modified-since request header is specified and last-modified request header is 
+			equal to or earlier than the modified response header.
+		The if-none-match request header is *.
+		The if-none-match request header, after being parsed into its directives, does not match the etag response header.
+file: Req_object/req_app.js			
+
+req.hostname
+	hostname from Host HTTP header 
+		when 'trust proxy' == true it will have  X-Forwarded-Host prop, can be set by client or proxy
+file: Req_object/req_app.js		
+
+req.ip
+	contains remote ip for addr 
+	for localhost its ::1
+		when 'trust proxy' != false its  left-most entry in the X-Forwarded-For set by client or proxy
+
+req.ips
+	when 'trust proxy' != false  this property = [ ...IP addresses  ]specified in the X-Forwarded-For req header		
+	or its empty
+
+
+
+req.method
+	contains the http method used 
+
+
+			till here
+				file: Req_object/req_app.js	
+
+
+
+
+req.originalUrl				
+	like req.url (a node prop) but retains the originalUrl
+		In a middleware function, req.originalUrl is COMBO  f req.baseUrl and req.path,
+FILE: Req_object/req_orginalUrl
+
+
+req.params
+	if you  have ":" in your path you will see the inputs here 
+		it uses the decodeURIComponent to decode the value 
+			if you have a regex param like '/file/*' instead of print every possible value you will see an iteration value
+
+req.path
+	Contains the path part of the request URL.
+		when called from middleware the mount point is not included 
+
+req.protocol
+	request protocol string 
+		when 'trust proxy' != false  use X-Forwarded-Proto header
+
+req.query
+	the stuff affter the ? in a url
+		try :?order=desc&shoe[color]=blue&shoe[type]=converse		 			
+
+
+req.route
+	the currently matched route and its information related
+
+
+req.secure
+	req.secure = 'https' == req.protocol;
+
+req.signedCookies
+	they exist because developers dont want attackers tampering their cookies, 
+
+req.stale
+	!req.fresh	
+
+
+req.subdomains
+	// Host: "tobi.ferrets.example.com"
+	// => ["ferrets", "tobi"]	
+
+req.xhr
+	was this a xhr
+		bug does not work with a standalone xhr request
+		
+
+			till here
+				file: Req_object/req_app.js	
+
