@@ -1069,6 +1069,7 @@ callaback == function(req, res, next, id)
 				app.params only trigger once even if multiple paths match it 
 file : App_object/app_param.js
 	you can also rewrite app.param behavior however this is deprecated 
+		the Router object also has params method 
 
 
 app.render(view, [locals], callback)
@@ -1291,3 +1292,122 @@ res.attachment([filename])
 		filename.F_OK (lol node fs.access)
 			Content-Type = return res.type('value')
 			 Content-Disposition  =  “filename=” parameter
+
+
+res.cookie(name, value [, options])
+sets the HTTP Set-Cookie header with the options provided.
+Any option not specified defaults to the value stated in RFC 6265. https://tools.ietf.org/html/rfc6265		
++----------+-------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------
+| Property | Type              | Description                                                                                                                                         
++----------+-------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------
+| domain   | String            | Domain name for the cookie. Defaults to the domain name of the app.                                                                                 
++----------+-------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------
+| encode   | Function          | A synchronous function used for cookie value encoding.
+								 Defaults to encodeURIComponent.  no async                                                             
++----------+-------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------
+| expires  | Date              | "Expiry date of the cookie in GMT. If not specified or set to 0       
+									creates a session cookie."  in ms                                                                            |
++----------+-------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------
+| httpOnly | Boolean           | Flags the cookie to be accessible only by the web server.                                                                                           
++----------+-------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------
+| maxAge   | Number            | Convenient option for setting the expiry time
+								 relative to the current time in milliseconds. 
+								 this results in expires being invalid                                                        
++----------+-------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------
+| path     | String            | Path for the cookie. Defaults to “/”.                                                                                                               
++----------+-------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------
+| secure   | Boolean           | Marks the cookie to be used with HTTPS only.                                                                                                        
++----------+-------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------
+| signed   | Boolean           | Indicates if the cookie should be signed. then access through
+								req.signedCookie object                                                                                                           
++----------+-------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------
+| sameSite | Boolean or String | Value of the “SameSite” Set-Cookie attribute. More information at 
+								 https://tools.ietf.org/html/draft-ietf-httpbis-cookie-same-site-00#section-4.1.1. 
++----------+-------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------					 
+
+
+
+res.clearCookie(name [, options])
+Web browsers and other compliant clients clear only if the options are identical
+
+	till here 
+		file: Res_object/cookie_res.js 
+
+
+res.format(object)
+
+performs content negotiation based on the requests Accepts HTTP header using req.accepts(). if they dont match up or the format donest have the 
+a MIME type available its sends a 406 not acceptable 
+	E-> sometimes even if the client does not have the MINE type in the accepts HTTP header it still works 
+		you can also use words as shown in the file 
+			file: Res_object/format_res.js
+
+
+res.get(field)
+
+gets any value in the response header, non case-sensitive 
+
+
+res.links(links)
+	joins the links property in the Link HTTP header field 
+		FILE:Res_object/links_res.js
+
+res.location(path)
+	Sets the response Location HTTP header to the specified path parameter.
+		if you see 'back' it referes to the Referer tag in the header, or else it refers to "/"
+			its the browser's job to redirect accordingly 
+				FILE:Res_object/location_res.js
+
+
+res.set(field [, value])
+Sets the response’s HTTP header field to value.
+		res.set('Content-Type', 'text/plain');
+
+		res.set({
+		  'Content-Type': 'text/plain',
+		  'Content-Length': '123',
+		  'ETag': '12345'
+		});					 		
+
+
+res.type(type)
+Sets the Content-Type HTTP header to the MIME type 
+	just like res.set 
+	res.type('.html');              // => 'text/html'
+	res.type('html');               // => 'text/html'
+	res.type('json');               // => 'application/json'
+	res.type('application/json');   // => 'application/json'
+	res.type('png');                // => image/png:
+		if the an invalid content-type is given you get an invalid media error 
+			FILE:Res_object/type_res.js
+
+
+res.vary(field)
+	Adds the field to the Vary response header, if it is not there already.
+		res.vary('User-Agent').render('docs');
+
+EXPRESS security Practices 
+
+dont use deprecated Express 
+	use TLS with NGINX 
+		TO GET a free TLS certificate 
+			https://letsencrypt.org/about/
+
+use Helmet a set of HTTP header security middleware
+
+At a minimum, disable X-Powered-By header
+
+Use cookies securly
+
+Don’t use the default session cookie name
+Set cookie security options
+
+Ensure your dependencies are secure
+	use npm audit 
+
+check here to make sure 
+	https://expressjs.com/en/advanced/best-practice-security.html
+
+use NGINX to Cache request results, Use a load balancer  and Use a reverse proxy
+
+					
