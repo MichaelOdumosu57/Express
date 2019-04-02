@@ -1,4 +1,4 @@
-https://expressjs.com/en/starter/hello-world.html
+7https://expressjs.com/en/starter/hello-world.html
 https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods
 https://www.w3schools.com/nodejs/met_path_join.asp
 https://expressjs.com/en/api.html#req
@@ -10,7 +10,7 @@ E-> are tips
 E -> X -> P -> R -> E -> S -> S ->
                               E -> X -> P -> R -> E -> S -> S ->
 														E -> X -> P -> R -> E -> S -> S ->
-																					E -> X -> P -> R -> E -> S -> S ->														
+																					E -> X -> P -> R -> E -> S -> S ->
 
 
 E -> X -> P -> R -> E -> S -> S ->
@@ -18,7 +18,7 @@ E -> X -> P -> R -> E -> S -> S ->
 to setup up a node environment with an express dependency
 	install node
 	npm init in a directory
-	make the entry point app.js 
+	make the entry point app.js
 	npm install express --save
 	node app.js
 
@@ -34,7 +34,7 @@ hello world
 
 		app.get('/', (req, res) => res.send('Hello World!'))
 
-		app.listen(port, () => console.log(`Example app listening on port ${port}!`))	
+		app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 				file:basic_app/hello_world.js
 
 														E -> X -> P -> R -> E -> S -> S ->
@@ -51,9 +51,9 @@ HANDLER is the function executed when the route is matched.
 
 																					E -> X -> P -> R -> E -> S -> S ->
 
-METHOD 
+M ETHOD
 		GET
-		The GET method requests a representation of the specified resource. 
+		The GET method requests a representation of the specified resource.
 		Requests using GET should only retrieve data and should have no other effect.
 		HEAD
 		The HEAD method retrieves meta-information written in response headers without the response body.,
@@ -61,34 +61,34 @@ METHOD
 		POST
 		its giving an object data to the server
 		PUT
-		modifes existing resources if target resources is there for the changes 
-		client side or makes a new one if target reosurce is not present in server side  
+		modifes existing resources if target resources is there for the changes
+		client side or makes a new one if target reosurce is not present in server side
 		DELETE
 		The DELETE method deletes the specified resource.
 		TRACE
-		The TRACE method echoes the received request so that a client can see 
+		The TRACE method echoes the received request so that a client can see
 		what (if any) changes or additions have been made by intermediate servers.
 		OPTIONS
 		The OPTIONS method returns the HTTP methods that the server supports for the specified URL.
 		 This can be used to check the functionality of a web server by requesting '*' instead of a specific resource.
 		CONNECT
-		[25] The CONNECT method converts the request connection to a transparent TCP/IP tunnel, 
+		[25] The CONNECT method converts the request connection to a transparent TCP/IP tunnel,
 		usually to facilitate SSL-encrypted communication (HTTPS) through an unencrypted HTTP proxy.
 		[26][27] See HTTP CONNECT method.
 		PATCH
 		The PATCH method applies partial modifications to a resource.[28]
 
-				All general-purpose HTTP servers are required to implement at least the GET and HEAD methods, 
+				All general-purpose HTTP servers are required to implement at least the GET and HEAD methods,
 				and all other methods are considered optional by the specification.[29]
 
 						Safe methods
-						Some of the methods (for example, HEAD, GET, OPTIONS and TRACE) are, 
+						Some of the methods (for example, HEAD, GET, OPTIONS and TRACE) are,
 						by convention, defined as safe, which means they are intended only for
 						 information retrieval and should not change the state of the server.
 
 						By contrast, methods such as POST, PUT, DELETE and PATCH are intended for
-						 actions that may cause side effects either on the server, or external 
-						 side effects such as financial transactions or transmission of email. 
+						 actions that may cause side effects either on the server, or external
+						 side effects such as financial transactions or transmission of email.
 						 Such methods are therefore not usually used by conforming web robots or web crawlers;
 						  some that do not conform tend to make requests without regard to context or consequences.
 
@@ -98,10 +98,10 @@ E -> X -> P -> R -> E -> S -> S ->
 
 Serving static files in Express
 
-to access a sub_directory where the express app is running 
+to access a sub_directory where the express app is running
 		app.use(express.static('[directory_name]'))
 				to access several directories you must call this several times
-file:static_serving/serve_static.js 
+file:static_serving/serve_static.js
 
 
 to access a dir not on the filesystem
@@ -111,7 +111,7 @@ to access a dir not on the filesystem
 
 to access a subdir
 		app.use('[path location of subdir]', express.static(path.join(__dirname,'[parent_dir....]', '[subdir]')))
-				to use path you must requrie it 
+				to use path you must requrie it
 				var path = require('path');
 		to accces
 			/[path location of subdir]/[file in subdir]
@@ -122,7 +122,7 @@ to serve a html file from the GET request itself
 file:/static_serving/serve_html.js
 
 E-> If you are serving many assets from a directory, use the express.static() middleware function.
-E-> refer to the file  below it helps plenty 
+E-> refer to the file  below it helps plenty
 express.static(root, [options])
 
 +--------------+--------------------------------------------------------------------------+----------+--------------+--------------+
@@ -132,31 +132,31 @@ express.static(root, [options])
 				  are treated. See dotfiles below.(it will not ignore .[directory])       | String   | “ignore”     |"ignore"      |
 +--------------+--------------------------------------------------------------------------+----------+--------------+--------------+
 | etag         | Enable or disable etag generation NOTE:
-				 express.static always sends weak ETags.                                  | Boolean  | true         |              | 
+				 express.static always sends weak ETags.                                  | Boolean  | true         |              |
 +--------------+--------------------------------------------------------------------------+----------+--------------+--------------+
 | extensions   | Sets file extension fallbacks: If a file is not found search for
 				 files with the specified extensions and serve the 1st
 				 . Example: ['html' 'htm'] (if an extension is given it doesnt work )     | Mixed    | false        |              |
 +--------------+--------------------------------------------------------------------------+----------+--------------+--------------+
 | fallthrough  | Let client errors fall-through as
-				 unhandled requests otherwise forward a client error. 
+				 unhandled requests otherwise forward a client error.
 				 this means if a url path is not on the server its handled in express     | Boolean  | true         |              |
 +--------------+--------------------------------------------------------------------------+----------+--------------+--------------+
-| immutable    | Enable or disable the immutable directive in the 
-				Cache-Control response header. If enabled the maxAge option 
-				should also be specified to enable caching. 
+| immutable    | Enable or disable the immutable directive in the
+				Cache-Control response header. If enabled the maxAge option
+				should also be specified to enable caching.
 				The immutable directive will prevent
-				 supported clients from making conditional 
+				 supported clients from making conditional
 				requests during the life of the maxAge option to
 				 check if the file has changed.                                            | Boolean  | false        |              |
 +--------------+---------------------------------------------------------------------------+----------+--------------+--------------+
-| index        | Sends the specified directory index file. 
-				 Set to false to disable directory indexing. cannot be true                | Mixed    | “index.html” |              | 
+| index        | Sends the specified directory index file.
+				 Set to false to disable directory indexing. cannot be true                | Mixed    | “index.html” |              |
 +--------------+---------------------------------------------------------------------------+----------+--------------+--------------+
 | lastModified | Set the Last-Modified header to the last
 				 modified date of the file on the OS.                                      | Boolean  | true         |              |
 +--------------+---------------------------------------------------------------------------+----------+--------------+--------------+
-| maxAge       | Set the max-age property of the 
+| maxAge       | Set the max-age property of the
 				 Cache-Control header in milliseconds or a string in ms format.            | Number   | 0            |              |
 +--------------+---------------------------------------------------------------------------+----------+--------------+--------------+
 | redirect     | Redirect to trailing “/” when the pathname is a directory.                | Boolean  | true         |              |
@@ -170,11 +170,11 @@ file : EXPRESS/static_serving/express_static.js
 
 Route paths
 
-If using a $ in a path escapt it with [] like this 
-		 “/data/$book”, would be “/data/([\$])book”.                              
+If using a $ in a path escapt it with [] like this
+		 “/data/$book”, would be “/data/([\$])book”.
 
 
-to match for the root diretory 
+to match for the root diretory
 		app.get('/', function (req, res) {
 		  res.send('root')
 		})
@@ -184,103 +184,103 @@ file: /routing_basic/root_dir.js
 to match for the sub_directory
 		app.get('/sub_directory', function (req, res) {
 		  res.send('sub_directory')
-		})		
-file: /routing_basic/root_dir.js	
+		})
+file: /routing_basic/root_dir.js
 
 
 to match for  acd and abcd.
 		app.get('/ab?cd', function (req, res) {
 		  res.send('ab?cd')
-		})	
-file: /routing_basic/root_dir.js			
+		})
+file: /routing_basic/root_dir.js
 
 
-to match for as many b's in a row ' for abcd 
+to match for as many b's in a row ' for abcd
 		app.get('/ab+cd', function (req, res) {
 		  res.send('ab+cd')
 		})
-file: /routing_basic/root_dir.js	
+file: /routing_basic/root_dir.js
 
 
 to match for   abcd, abxcd, abRANDOMcd, ab123cd
 		app.get('/ab*cd', function (req, res) {
 		  res.send('ab*cd')
 		})
-file: /routing_basic/root_dir.js	
+file: /routing_basic/root_dir.js
 
 to regex for "a"
 		app.get(/a/, function (req, res) {
 		  res.send('/a/')
 		})
-file: /routing_basic/root_dir.js		
+file: /routing_basic/root_dir.js
 
 
 to match for butterfly and dragonfly, but not butterflyman, dragonflyman
 		app.get(/.*fly$/, function (req, res) {
 		  res.send('/.*fly$/')
-		})	 
+		})
 
 
 	
-file: /routing_basic/root_dir.js				
+file: /routing_basic/root_dir.js
 														E -> X -> P -> R -> E -> S -> S ->
 
-Route parameters														
-varables in paths 
+Route parameters
+varables in paths
 
 
 any dir in a path that starts wit a ':' is a variable filled when the user or script makes a GET request to the express app
-		app.get('/users/:userId/books/:bookId', function (req, res) {  
+		app.get('/users/:userId/books/:bookId', function (req, res) {
 		  res.send(req.params)
-		})		
+		})
 				Route path: /users/:userId/books/:bookId
 				Request URL: http://localhost:3000/users/34/books/8989
 				would return req.params: { "userId": "34", "bookId": "8989" }
 file: /routing_basic/routing_params/params.js
 
 
-using  hyphen (-) 
-		app.get('/flights/:from-:to', function (req, res) {  
+using  hyphen (-)
+		app.get('/flights/:from-:to', function (req, res) {
 		  res.send(req.params)
-		})	
+		})
 				Route path: /flights/:from-:to
 				Request URL: http://localhost:3000/flights/LAX-SFO
 				req.params: { "from": "LAX", "to": "SFO" }
-file: /routing_basic/routing_params/params.js						
+file: /routing_basic/routing_params/params.js
 
 
 dot (.)
-		app.get('/plantae/:genus.:species', function (req, res) {  
+		app.get('/plantae/:genus.:species', function (req, res) {
 		  res.send(req.params)
-		})	
+		})
 				Route path: /plantae/:genus.:species
 				Request URL: http://localhost:3000/plantae/Prunus.persica
 				req.params: { "genus": "Prunus", "species": "persica" }
 
 					
-file: /routing_basic/routing_params/params.js						
+file: /routing_basic/routing_params/params.js
 
 E-> so we see a dir does not to need to literally exist in order for certain actions to be done
 
 
-use a parentheses for regex 
-		app.get('/user/:userId(\\d+)', function (req, res) {  
+use a parentheses for regex
+		app.get('/user/:userId(\\d+)', function (req, res) {
 		  res.send(req.params)
-		})	
+		})
 				Route path: /user/:userId(\\d+)
 				Request URL: http://localhost:3000/user/42
 				req.params: {"userId": "42"}
-file: /routing_basic/routing_params/params.js	
+file: /routing_basic/routing_params/params.js
 
 E-> in order to make a regex match you must escape any regex literals such as \w \d withe the '\' ' symbol
-E->In Express 4.x, the * character in regular expressions is not interpreted in the usual way. As a workaround, use {0,} instead of *. 
+E->In Express 4.x, the * character in regular expressions is not interpreted in the usual way. As a workaround, use {0,} instead of *.
 This will likely be fixed in Express 5.
 
 
 
 
 																					E -> X -> P -> R -> E -> S -> S ->
-Route handlers				
+Route handlers
 
 there are multi request handling callbacks when give a wider functionality
 		app.get('/example/b', function (req, res, next) {
@@ -289,7 +289,7 @@ there are multi request handling callbacks when give a wider functionality
 		}, function (req, res) {
 		  res.send('Hello from B!')
 		})
-file: routing_basic/multi_routing/multi_routing.js		
+file: routing_basic/multi_routing/multi_routing.js
 
 E-> to include a var in a tilde string (especially on servers) use ${}
 
@@ -310,7 +310,7 @@ An array of callback functions can handle a route.
 		}
 
 		app.get('/example/c', [cb0, cb1, cb2])
-file: routing_basic/multi_routing/multi_routing.js		
+file: routing_basic/multi_routing/multi_routing.js
 
 
 A combination of independent functions and arrays of functions can handle a route. For example:
@@ -333,9 +333,9 @@ A combination of independent functions and arrays of functions can handle a rout
 		})
 
 
-file: routing_basic/multi_routing/multi_routing.js		
+file: routing_basic/multi_routing/multi_routing.js
 
-E-> can only use res.send once in these multi routing function calls 	
+E-> can only use res.send once in these multi routing function calls
 
 
 E -> X -> P -> R -> E -> S -> S ->
@@ -345,26 +345,26 @@ how the express app responds when it gets a client request
 
 if a Response method is not called from a route handler, the client request will be left hanging.
 		app.get('/hang_request', function (req, res, next) {
-		  //no response method  
+		  //no response method
 		})
 				so it will be constantly loading or a timer will be availble in the client to
 				 let the user know a resource is not available
-				if the daemon quits then the client responds with a message to the user 
+				if the daemon quits then the client responds with a message to the user
 file:/response_methods/response_methods.js
 
 res.download()
-		to download a file 
+		to download a file
 				res.download('/report-12345.pdf');
 
 		the second argument renames the files on download
 				res.download('/report-12345.pdf', '/report.pdf');
 
-		download error handler 
+		download error handler
 				res.download('/report-12345.pdf', 'report.pdf', function(err){
 					  if (err) {
 					    // Handle error, but keep in mind the response may be partially-sent
 					    // so check res.headersSent
-					  } 
+					  }
 					  else {
 					    // decrement a download credit, etc.
 					  }
@@ -378,7 +378,7 @@ file:/response_methods/response_methods.js
 
 
 res.end([data] [, encoding])
-Use to quickly end the response without any data. 
+Use to quickly end the response without any data.
 	res.end();
 	this leaves the user with a blank page
 	res.status(404).end();
@@ -389,10 +389,10 @@ E-> use res.status to learn about many HTTP  response protocol 403  is authoriza
 
 
 res.json()
-Sends a JSON response. This method sends a response (with the correct content-type) 
+Sends a JSON response. This method sends a response (with the correct content-type)
 that is the parameter converted to a JSON string using JSON.stringify().
-The parameter can be any JSON type, including object, array, string, Boolean, number, or null, 
-jsonp has callback support 
+The parameter can be any JSON type, including object, array, string, Boolean, number, or null,
+jsonp has callback support
 and you can also use it to convert other values to JSON.
 		res.json(null);
 		res.json({ user: 'tobi' });
@@ -405,7 +405,7 @@ and you can also use it to convert other values to JSON.
 		// => callback({ "user": "tobi" })
 
 		res.status(500).jsonp({ error: 'message' });
-		// => callback({ "error": "message" })		
+		// => callback({ "error": "message" })
 file:/response_methods/response_methods.js
 
 E-> res.json really returns the data it gets, it doesnt try to modify it
@@ -417,13 +417,13 @@ redirect a request
 		res.redirect('http://example.com');
 		res.redirect(301, 'http://example.com');
 		res.redirect('../login');
-file:/response_methods/response_methods.js		
+file:/response_methods/response_methods.js
 
-E-> do  not connect your routes to example.com the system deep links it and can ruin future plans with  your app 
+E-> do  not connect your routes to example.com the system deep links it and can ruin future plans with  your app
 
 res.render(view [, locals] [, callback])
 Render a view template.
-we wont be using this, 
+we wont be using this,
 
 E-> refer to res.render for REact and Redux
 
@@ -437,10 +437,10 @@ sets the content type before sending data
 		  'Content-Type': 'text/plain',
 		  'Content-Length': '1',
 		  
-		});		
-E-> it seems at a basic level content-length does not affect anything but please try not to include this parameter if working with 
-dynamics in size		
-file:/response_methods/response_methods.js		
+		});
+E-> it seems at a basic level content-length does not affect anything but please try not to include this parameter if working with
+dynamics in size
+file:/response_methods/response_methods.js
 
 E-> depending on the content type the browser modifies how you see the data
 
@@ -450,12 +450,12 @@ the options parameter
 		+--------------+------------------------------------------------------------------------------ +----------+--------------+
 		| ﻿"Property"   | Description                                                                   | Default  | Availability |
 		+--------------+------------------------------------------------------------------------------ +----------+--------------+
-		| maxAge       | Sets the max-age property of the Cache-Control 
+		| maxAge       | Sets the max-age property of the Cache-Control
 		|              | header in milliseconds or a string in ms format                               | 0        |              |
 		+--------------+-------------------------------------------------------------------------------+----------+--------------+
 		| root         | Root directory for relative filenames.                                        |          |              |
 		+--------------+-------------------------------------------------------------------------------+----------+--------------+
-		| lastModified | Sets the Last-Modified header to the last modified date 
+		| lastModified | Sets the Last-Modified header to the last modified date
 		|              |of the file on the OS. Set false to disable it.                                | Enabled  | 4.9.0+       |
 		+--------------+-------------------------------------------------------------------------------+----------+--------------+
 		| headers      | Object containing HTTP headers to serve with the file.                        |          |              |
@@ -467,15 +467,15 @@ the options parameter
 		| cacheControl | Enable or disable setting Cache-Control response header.                      | true     | 4.14+        |
 		+--------------+-------------------------------------------------------------------------------+----------+--------------+
 		| immutable    | Enable or disable the immutable directive in the Cache-Control
-		|              |response header. If enabled, the maxAge option 
+		|              |response header. If enabled, the maxAge option
 		|              | should also be specified to
-		|              | enable caching. The immutable directive will prevent supported clients 
-		|              | from making conditional requests during the life of the maxAge 
+		|              | enable caching. The immutable directive will prevent supported clients
+		|              | from making conditional requests during the life of the maxAge
 		|              | option to check if the file has changed.                                      | false    | 4.16+        |
 		+--------------+-------------------------------------------------------------------------------+----------+--------------+
 
 
-all arguments 
+all arguments
 		app.get('/file/:name', function (req, res, next) {
 
 		  var options = {
@@ -498,10 +498,10 @@ all arguments
 
 		});
 
-E -> use this to get around express.static bugs 
-E-> although express is serving static files here if you have a server side code moving things around, 
-	there can be a dynamaic concept applied 		
-file:/response_methods/response_methods.js	
+E -> use this to get around express.static bugs
+E-> although express is serving static files here if you have a server side code moving things around,
+	there can be a dynamaic concept applied
+file:/response_methods/response_methods.js
 
 preventing use of some files
 
@@ -515,18 +515,18 @@ app.get('/sendFile/:name', function (req, res, next) {
     function  mayViewFilesFrom (yes, response){
       if (yes == "a.txt") {
         response.sendFile(__dirname + "/" + yes);
-      } 
+      }
 
       else {
         response.status(403).send("Sorry! You can't see that.");
       }
     }
 
-file:/response_methods/response_methods.js	
+file:/response_methods/response_methods.js
 
 
 res.sendStatus
-some status codes 
+some status codes
 		res.sendStatus(200); // equivalent to res.status(200).send('OK')
 		res.sendStatus(403); // equivalent to res.status(403).send('Forbidden')
 		res.sendStatus(404); // equivalent to res.status(404).send('Not Found')
@@ -539,7 +539,7 @@ some status codes
                               E -> X -> P -> R -> E -> S -> S ->
 
 app.route ()
-helps when writing too many route handlers 
+helps when writing too many route handlers
 		app.route('/book')
 		  .get(function (req, res) {
 		    res.send('Get a random book')
@@ -550,7 +550,7 @@ helps when writing too many route handlers
 		  .put(function (req, res) {
 		    res.send('Update the book')
 		  })
-file: /route_handler_handler/route_handler_handler.js	
+file: /route_handler_handler/route_handler_handler.js
 
 
 E-> use this function when dealing with a Converting circular structure to JSON error
@@ -565,29 +565,29 @@ E-> use this function when dealing with a Converting circular structure to JSON 
 		    }
 		    return value;
 		  };
-		};	          
-		JSON.stringify([circular object], getCircularReplacer());   
-file: /route_handler_handler/get_req_message.js			 
+		};
+		JSON.stringify([circular object], getCircularReplacer());
+file: /route_handler_handler/get_req_message.js
 
 														E -> X -> P -> R -> E -> S -> S ->
 express.Router
-might have to use this to communicate with databases		
-when you have project purposes for express  and you have a mega project instead of making a mega app 
+might have to use this to communicate with databases
+when you have project purposes for express  and you have a mega project instead of making a mega app
 you can make you own modular apps with the express.Router function, which allows you to pick and choose your "sub"-Router
 and save time rewriting huge picecs of code, make sure they are intrgratedabebly sound!!
 
 
 for the routing module
 var express = require('express')
-var router = express.Router()	
-		replace app with router it works just the same with all methods but investigate to make sure 
+var router = express.Router()
+		replace app with router it works just the same with all methods but investigate to make sure
 				at the end of your express Router
-				module.exports = router	
-						then load the router in the express app 
+				module.exports = router
+						then load the router in the express app
 								var custom_router = require('./custom_router')
 								...
-								app.use('/custom_router', custom_router)	
-										this will handle anythings related to the "/custom_router" path entered by the user 
+								app.use('/custom_router', custom_router)
+										this will handle anythings related to the "/custom_router" path entered by the user
 										you need to use "/custom_router" with your requests to acccess and activate the router
 E-> think of the router as the hand but the app as the brains that what it really is
 E-> when you use app.use on a router the path you give as the first parameter must be included before using the Router's own paths'
@@ -595,34 +595,34 @@ E-> when you use app.use on a router the path you give as the first parameter mu
 +---------------+-------------------------------------+-------------------------------+--------------+
 | Property      | Description                         | Default                       | Availability |
 +---------------+-------------------------------------+-------------------------------+--------------+
-| caseSensitive | Enable case sensitivity.            | Disabled by default treating 
+| caseSensitive | Enable case sensitivity.            | Disabled by default treating
                   doesnt work                          “/Foo” and “/foo” as the same. |              |
 +---------------+-------------------------------------+-------------------------------+--------------+
-| mergeParams   | Preserve the req.params values 
+| mergeParams   | Preserve the req.params values
 |				|  from the parent router.
-|				| If the parent and the child have 
-|				| conflicting param names the child’s 
-|				| value take precedence.   
+|				| If the parent and the child have
+|				| conflicting param names the child’s
+|				| value take precedence.
                   always uses the children param      | false                         | 4.5.0+       |
 +---------------+-------------------------------------+-------------------------------+--------------+
-| strict        | Enable strict routing.  doenst work | Disabled by default 
+| strict        | Enable strict routing.  doenst work | Disabled by default
 														“/foo” and “/foo/”            |              |
 														are treated the
 														same by the router.
 +---------------+-----------------------------------------+---------------------------+--------------+
-directory:/the_express_router run :use_express_router.js										
+directory:/the_express_router run :use_express_router.js
 
 
 
-																					E -> X -> P -> R -> E -> S -> S ->														
+																					E -> X -> P -> R -> E -> S -> S ->
 
 Writing middleware for use in Express apps
 Middleware functions are functions that have access to the request object (req),
  the response object (res), and the next function in the application’s request-response cycle
-		If the current middleware function does not end the request-response cycle, 
+		If the current middleware function does not end the request-response cycle,
 		it must call next() to
-		pass control to the next middleware function. 
-		Otherwise, the request will be left hanging. 
+		pass control to the next middleware function.
+		Otherwise, the request will be left hanging.
 
 what middleware looks like
 		var myMiddleware = function (req, res, next) {
@@ -648,14 +648,14 @@ using middleware
 		  res.send('Hello World!')
 		})
 
-		app.listen(3000)		
+		app.listen(3000)
 file: /middleware/basic_middleware.js
-E-> the middleware must be loaded before the apps http method call 
+E-> the middleware must be loaded before the apps http method call
 
 E -> X -> P -> R -> E -> S -> S ->
 Configurable middleware
 some times you dont want your app to be static loading everything it needs when production needs one router or middleware
-to solve that use this middleware config purpose 
+to solve that use this middleware config purpose
 		
 		
 		module.exports = function(options) {
@@ -665,7 +665,7 @@ to solve that use this middleware config purpose
 		    }
 		    if(options.option2 == "2"){
 		    	console.log(" reacting some more")
-		    }	
+		    }
 		    next()
 		  }
 		}
@@ -680,7 +680,7 @@ file: /middleware/config_middleware.js
 
                               E -> X -> P -> R -> E -> S -> S ->
 Using middleware
-	Application middleware 
+	Application middleware
 to send a req to the next route
 		app.get('/:id', function (req, res, next) {
 		  // if the user ID is 0, skip to the next route
@@ -695,7 +695,7 @@ to send a req to the next route
 		// handler for the /user/:id path, which sends a special response
 		app.get('/:id', function (req, res, next) {
 		  res.send('special')
-		})	
+		})
 file:/middleware/application/application.js
 E-> if express complains about several res.send calls, use a route to fix things
 
@@ -725,44 +725,44 @@ to skip a router after a condition use  next('router')
 		app.use('/admin', router, function (req, res) {
 		  res.sendStatus(401)
 		})
-E -> very very useful for securing access to your work if someone gets their hands on your computer		
+E -> very very useful for securing access to your work if someone gets their hands on your computer
 file:/the_express_router/router_skip.js
 
 
 		Error-handling middleware
 				Must use four parameters
-						determine if your method is sync  (use try catch throw) 
+						determine if your method is sync  (use try catch throw)
 						or async go to async_error_handle.js it works
 						file:async_error_handle.js
 
 
-		Built-in middleware	
-				Starting with version 4.x, Express no longer depends on Connect. The middleware functions 
+		Built-in middleware
+				Starting with version 4.x, Express no longer depends on Connect. The middleware functions
 				that were previously included with Express are now in separate modules; see the list of middleware functions.
 
 		Third-party middleware
-				npm? you know how to do that a list 
+				npm? you know how to do that a list
 				https://github.com/senchalabs/connect#middleware
 
 
 														E -> X -> P -> R -> E -> S -> S ->
-Error handling 
+Error handling
 	Error Handling refers to how Express catches and
 	processes errors that occur both synchronously and asynchronously.
 		express can catch synchronous code errors by itself but needs and error handler to deal with
-		asynchronous code 
-		E-> write all your code with error handlers since express wont tell you the difference 
-				If you pass anything to the next() function (except the string 'route'), 
-				Express regards the current request as being an error and will skip 
+		asynchronous code
+		E-> write all your code with error handlers since express wont tell you the difference
+				If you pass anything to the next() function (except the string 'route'),
+				Express regards the current request as being an error and will skip
 				any remaining non-error handling routing and middleware functions.
-				it will print whatever is in the next arg to the client and to stdout, 
+				it will print whatever is in the next arg to the client and to stdout,
 				E-> if this is javascript it sends it perfectly, so you can use this as a bypass if the receving end can
-				 take it and run it   
+				 take it and run it
 				file: the_express_router/router_skip.js
 
 Use promises to avoid the overhead of the try..
-catch block or when using functions that return promises. For example:	
-this gets the job done 	
+catch block or when using functions that return promises. For example:
+this gets the job done
 
 app.get("/", function (req, res, next) {
   Promise.resolve()
@@ -771,35 +771,35 @@ app.get("/", function (req, res, next) {
       console.log("some code")
       res.send("ok")
   }).catch(next)
-},function (  err, req, res, next) {  
+},function (  err, req, res, next) {
   res.send("the promise caught the error")
-}); 
+});
 
-E-> on this system dont use promises to handle errors, dont use promises for express, dont code with sync code 				
+E-> on this system dont use promises to handle errors, dont use promises for express, dont code with sync code
 
-The default error handler 
-	If you pass an error to next() and you do not handle it in a custom error handler, 
+The default error handler
+	If you pass an error to next() and you do not handle it in a custom error handler,
 	it will be handled by the built-in error handler; the error will be written to the client with the stack trace.
 	The stack trace is not included in the production environment.
 
 E-> Set the environment variable NODE_ENV to production, to run the app in production mode.
 
-if you call the next() while express writes a response to a client and an error occurs  it will close the connection and 
-fail the request 
+if you call the next() while express writes a response to a client and an error occurs  it will close the connection and
+fail the request
 
-do this instead as a callback 
+do this instead as a callback
 		function  (err, req, res, next) {
 		  if (res.headersSent) {
 		    return next(err) //fix what needs to be fixed use the 'error' event to further fix things
 		    // hopefully have enough information from the req to make another req and send a fixed res
-		    // or let the client know if something went wrong, refresh the button 
+		    // or let the client know if something went wrong, refresh the button
 		  }
 		  else{
 		  		res.redirect([path]) and further redirects till you can use 'error' evebnt tofix the problem
 		  }
 		  res.status(500)
 		  res.render('just reload me', { error: err })
-		} 
+		}
 
  	add this if its not helping
 
@@ -814,7 +814,7 @@ Writing error handlers
 		app.use(function (err, req, res, next) {
 		  console.error(err.stack)
 		  res.status(500).send('Something broke!')
-		})			
+		})
 
 E-> error handlers are for async functions that throw errors, if it does not throw an error the error handler callback
 	will be skipped, and your inteneded code for dynamaics will be skipped also. Use a regular function and put them together
@@ -822,7 +822,7 @@ E-> error handlers are for async functions that throw errors, if it does not thr
 file: async_error_handle.js
 
 
-																					E -> X -> P -> R -> E -> S -> S ->	
+																					E -> X -> P -> R -> E -> S -> S ->
 
 Debugging Express
 
@@ -832,19 +832,19 @@ you dont have to comment it out during production
 To see all the internal logs used in Express, set the DEBUG environment variable to express:* when launching your app.
 		$ DEBUG=express:* node index.js
 
-To see the logs only from the router implementation set the value of DEBUG to express:router. Likewise, to see logs only 
-from the application implementation set the value of DEBUG to express:application, and so on.																							
+To see the logs only from the router implementation set the value of DEBUG to express:router. Likewise, to see logs only
+from the application implementation set the value of DEBUG to express:application, and so on.
 
 Applications generated by express
 		express sample-app
-			to Debugging	
+			to Debugging
 				$ DEBUG=sample-app:* node ./bin/www
-		Routers		
+		Routers
 		express http
-		express mail 
-		express express	  	
+		express mail
+		express express
 			to debug
-				$ DEBUG=http,mail,express:* node index.js		
+				$ DEBUG=http,mail,express:* node index.js
 
 Express behind proxies
 	refer for help
@@ -852,37 +852,37 @@ Express behind proxies
 E -> X -> P -> R -> E -> S -> S ->
 Database integration
 https://expressjs.com/en/guide/database-integration.html
-you need the database there in order for things to work 
+you need the database there in order for things to work
 
 
 
                               E -> X -> P -> R -> E -> S -> S ->
-Best performance practices 
+Best performance practices
 
 Use gzip compression
 	var compression = require('compression')
 	var express = require('express')
 	var app = express()
-	app.use(compression())	
+	app.use(compression())
 		file:template_app.js
 
 				for high traffic websites its best to do gzip in a reverse proxy --> NGINX :))
 
 Don’t use synchronous functions
-	If you are using Node.js 4.0+ or io.js 2.1.0+, you can use the 	--trace-sync-io command-line flag 
+	If you are using Node.js 4.0+ or io.js 2.1.0+, you can use the 	--trace-sync-io command-line flag
 	to print a warning and a stack trace whenever your application uses a synchronous API.
 		dont use the flag in production
 
 Do logging correctly
-	if you use console.log or console.error pipe the output to another program to avoid synchronous activity 
+	if you use console.log or console.error pipe the output to another program to avoid synchronous activity
 	also use the special debug module to control which messages are sent to console.err (what part of the program you want
 		to debug )
 
 For app activity
 
 	If you’re logging app activity (for example, tracking traffic or API calls),
-	 instead of using console.log(), use a logging library like Winston or Bunyan. 
-	 For a detailed comparison of these two libraries, see the StrongLoop blog post 
+	 instead of using console.log(), use a logging library like Winston or Bunyan.
+	 For a detailed comparison of these two libraries, see the StrongLoop blog post
 	 Comparing Winston and Bunyan Node.js Logging.
 
 Handle exceptions properly
@@ -895,16 +895,16 @@ Handle exceptions properly
 			 to run and become unpreditcable to your system resources and probably unresponisve to your system manager
 			 you dont want the second one in production
 			 		crashing and restarting is sometimes the most reliable way to recover from an error
-			 		don't use domains ' it generally does not solve the problem 
+			 		don't use domains ' it generally does not solve the problem
 
 			 				dont use try throw catch with asynchronous code use only for synchronous code, if you need to
-			 				throw an error use console.error, it will handle properly  
+			 				throw an error use console.error, it will handle properly
 
 
-		 Use promises	
-		 		Promises will handle any exceptions (both explicit and implicit) in asynchronous 
-		 		code blocks that use then(). 
-		 		Just add .catch(next) to the end of promise chains.		
+		 Use promises
+		 		Promises will handle any exceptions (both explicit and implicit) in asynchronous
+		 		code blocks that use then().
+		 		Just add .catch(next) to the end of promise chains.
 				app.get("/", function (req, res, next) {
 				  Promise.resolve()
 				  .then(function(rel){
@@ -912,13 +912,13 @@ Handle exceptions properly
 				      console.log("some code")
 				      res.send("ok")
 				  }).catch(next)
-				},function (  err, req, res, next) {  
+				},function (  err, req, res, next) {
 				  res.send("the promise caught the error")
-				}); 		 				
-		 			all async code must return promises if they do not convert the base object 
-		 			using a helper function like Bluebird.promisifyAll().  
-		 			Event emitters (like streams) can still cause uncaught exceptions. 
-		 			handle properly like this 
+				});
+		 			all async code must return promises if they do not convert the base object
+		 			using a helper function like Bluebird.promisifyAll().
+		 			Event emitters (like streams) can still cause uncaught exceptions.
+		 			handle properly like this
 
 								const wrap = fn => (...args) => fn(...args).catch(args[2])
 
@@ -926,11 +926,11 @@ Handle exceptions properly
 								  let company = await getCompanyById(req.query.id)
 								  let stream = getLogoStreamById(company.id)
 								  stream.on('error', next).pipe(res)
-								}))		 			
+								}))
 
 	 			
 		file: performance_practices/promise_error_handler.js
-E-> be careful for promise catching software it can listen for routes its not supposed to try not to use this 		
+E-> be careful for promise catching software it can listen for routes its not supposed to try not to use this
 
 
 
@@ -939,34 +939,34 @@ E-> be careful for promise catching software it can listen for routes its not su
 
 														E -> X -> P -> R -> E -> S -> S ->
 
-Set NODE ENV to production   
+Set NODE ENV to production
 
 
-																					E -> X -> P -> R -> E -> S -> S ->	
+																					E -> X -> P -> R -> E -> S -> S ->
 
 Express Objects
 express.urlencoded([options])
 
-for  urlencoded http requests 
+for  urlencoded http requests
 
 
-E -> X -> P -> R -> E -> S -> S ->	
-Application Object 
+E -> X -> P -> R -> E -> S -> S ->
+Application Object
 
 you can get the express app like this
-res.app || req.app 
+res.app || req.app
 
 
 app.locals
-	local impt var for the app 
-		if you remove a custom setting in your app, app.locals does not save it 
+	local impt var for the app
+		if you remove a custom setting in your app, app.locals does not save it
 FILE:App_object/app_object.js
 
 app.mountpath
 	tells you where your sub path was mounted
 		express.Router() doesnt have thiss
-			if there is more than one mounthpath  an array 
-FILE:App_object/app_mountpath.js		
+			if there is more than one mounthpath  an array
+FILE:App_object/app_mountpath.js
 
 
 
@@ -974,52 +974,52 @@ FILE:App_object/app_mountpath.js
 app.on('mount', callback(parent))
 	.emit() sub-app mount on parent app
 		parent only arg
-			cannot see full parent object in v8 debugger 
-FILE:App_object/app_mountpath.js				
+			cannot see full parent object in v8 debugger
+FILE:App_object/app_mountpath.js
 
 app.all(path, callback [, callback ...])
 		This method is like the standard app.METHOD() methods it matches all HTTP verbs.
 			app.all('*', requireAuthentication, loadUser);
-				means everything that has to go through that middleware before it can continue 
+				means everything that has to go through that middleware before it can continue
 			app.all('/api/*', requireAuthentication);
 				whitelist functionality
 
 app.delete(path, callback [, callback ...])
-		routes HTTP delete req 
+		routes HTTP delete req
 				app.delete('/', function (req, res) {
 				  res.send('DELETE request to homepage');
-				});						
+				});
 
 app.disable(name)
-	same as app.set(name,false)				
+	same as app.set(name,false)
 
 
 app.disabled(name)
-	checks if name == false 
+	checks if name == false
 
 
 app.enable(name)
 	same as app.set(name,true)
 
 app.enabled(name)
-	if name == true return true 
+	if name == true return true
 
 app.engine(ext, callback)
-	were not looking at this 
+	were not looking at this
 
 app.get(name)
-	returns appt setting value 		
-FILE:App_object/app_mountpath.js						
+	returns appt setting value
+FILE:App_object/app_mountpath.js
 
 app.listen(path, [callback])
-	sets up a UNIX socket and listens for requests there 	
+	sets up a UNIX socket and listens for requests there
 		same as http.Server.listen().
 
 	app.listen([port[, host[, backlog]]][, callback])
-		no port or omitted the OS will give it an unused port 
+		no port or omitted the OS will give it an unused port
 
-	the express() is actually a function passed to node http server 
-	to help it handle requests 
+	the express() is actually a function passed to node http server
+	to help it handle requests
 
 
 app.METHOD(path, callback [, callback ...])
@@ -1049,139 +1049,139 @@ trace
 unlock
 unsubscribe
 
-to use a non http method 
+to use a non http method
 app['m-search']('/', ()=>{})
-app.all loads even for non http methods 
+app.all loads even for non http methods
 
 
 
 
 app.param([name], callback)
-where name is a :param in a app http method path  
+where name is a :param in a app http method path
 callaback == function(req, res, next, id)
-	if name == string ,param == id 
-		if name == array write like this  
+	if name == string ,param == id
+		if name == array write like this
 		name = ['param1','param2']
-			and the callaback is registered for each param in order 
+			and the callaback is registered for each param in order
 				app.params is only local to its parent app or router and they are not inherited
 				by children
 
-				app.params only trigger once even if multiple paths match it 
+				app.params only trigger once even if multiple paths match it
 file : App_object/app_param.js
-	you can also rewrite app.param behavior however this is deprecated 
-		the Router object also has params method 
+	you can also rewrite app.param behavior however this is deprecated
+		the Router object also has params method
 
 
 app.render(view, [locals], callback)
-	just like res.render but it cannot send the result to the client 
+	just like res.render but it cannot send the result to the client
 
 
 app.route(path)
-	if you dont want app.all use app.route 
-		was discussed earlier 
+	if you dont want app.all use app.route
+		was discussed earlier
 
 app.set(name, value)
-	for the server or you be careful some values are for the server 
-		sub-app do not inheirt names with a default value, you must provide these in the sub app 
-			it will inherit settings with no default value 
-				exceptions 
-				they inherit 'trust proxy' 
+	for the server or you be careful some values are for the server
+		sub-app do not inheirt names with a default value, you must provide these in the sub app
+			it will inherit settings with no default value
+				exceptions
+				they inherit 'trust proxy'
 				no inherit 'view cache' while(NODE_ENV == 'production')
-					go to site to see table 
-				set the x-powered-by express to false in your apps 
+					go to site to see table
+				set the x-powered-by express to false in your apps
 file: App_object/app_get_set.js
 
 app.use([path,] callback [, callback...])
 	matches all sub paths as well
 		FILE: the_express_router
-			http get localhost:3000/birds/about/3241/var works 
-	the path can be an array 
+			http get localhost:3000/birds/about/3241/var works
+	the path can be an array
 	['/abcd', '/xyza', /\/lmn|\/pqr/]
 		will match `/abcd`, `/xyza`, `/lmn`, and `/pqr`
 
-app object tips 
-	precedence to public 1st 
+app object tips
+	precedence to public 1st
 		app.use(express.static(__dirname + '/public'));
 		app.use(express.static(__dirname + '/files'));
 		app.use(express.static(__dirname + '/uploads'));
 
 					E -> X -> P -> R -> E -> S -> S ->
 
-Request the request object a.k.a req 
+Request the request object a.k.a req
 	
 req.app
-	the express application behind the req 
+	the express application behind the req
 file: Req_object/req_app.js
 
 req.baseUrl
 	the path the router instance is matched on different from app.mounthpath
-file: Req_object/req_baseUrl.js		
+file: Req_object/req_baseUrl.js
 
 req.body
-	use the readStream functionality to get it 
+	use the readStream functionality to get it
 file: Req_object/req_app.js
 
 req.cookies
-	if the req contains cookies you will see them here 	
-file: Req_object/req_app.js	
+	if the req contains cookies you will see them here
+file: Req_object/req_app.js
 
 req.fresh
 	It is true if the cache-control request header doesn’t have a no-cache directive and any of the following are true:
 
-		The if-modified-since request header is specified and last-modified request header is 
+		The if-modified-since request header is specified and last-modified request header is
 			equal to or earlier than the modified response header.
 		The if-none-match request header is *.
 		The if-none-match request header, after being parsed into its directives, does not match the etag response header.
-file: Req_object/req_app.js			
+file: Req_object/req_app.js
 
 req.hostname
-	hostname from Host HTTP header 
+	hostname from Host HTTP header
 		when 'trust proxy' == true it will have  X-Forwarded-Host prop, can be set by client or proxy
-file: Req_object/req_app.js		
+file: Req_object/req_app.js
 
 req.ip
-	contains remote ip for addr 
+	contains remote ip for addr
 	for localhost its ::1
 		when 'trust proxy' != false its  left-most entry in the X-Forwarded-For set by client or proxy
 
 req.ips
-	when 'trust proxy' != false  this property = [ ...IP addresses  ]specified in the X-Forwarded-For req header		
+	when 'trust proxy' != false  this property = [ ...IP addresses  ]specified in the X-Forwarded-For req header
 	or its empty
 
 
 
 req.method
-	contains the http method used 
+	contains the http method used
 
 
 			till here
-				file: Req_object/req_app.js	
+				file: Req_object/req_app.js
 
 
 
 
-req.originalUrl				
+req.originalUrl
 	like req.url (a node prop) but retains the originalUrl
 		In a middleware function, req.originalUrl is COMBO  f req.baseUrl and req.path,
 FILE: Req_object/req_orginalUrl
 
 
 req.params
-	if you  have ":" in your path you will see the inputs here 
-		it uses the decodeURIComponent to decode the value 
+	if you  have ":" in your path you will see the inputs here
+		it uses the decodeURIComponent to decode the value
 			if you have a regex param like '/file/*' instead of print every possible value you will see an iteration value
 
 req.path
 	Contains the path part of the request URL.
-		when called from middleware the mount point is not included 
+		when called from middleware the mount point is not included
 
 req.protocol
-	request protocol string 
+	request protocol string
 		when 'trust proxy' != false  use X-Forwarded-Proto header
 
 req.query
 	the stuff affter the ? in a url
-		try :?order=desc&shoe[color]=blue&shoe[type]=converse		 			
+		try :?order=desc&shoe[color]=blue&shoe[type]=converse
 
 
 req.route
@@ -1192,15 +1192,15 @@ req.secure
 	req.secure = 'https' == req.protocol;
 
 req.signedCookies
-	they exist because developers dont want attackers tampering their cookies, 
+	they exist because developers dont want attackers tampering their cookies,
 
 req.stale
-	!req.fresh	
+	!req.fresh
 
 
 req.subdomains
 	// Host: "tobi.ferrets.example.com"
-	// => ["ferrets", "tobi"]	
+	// => ["ferrets", "tobi"]
 
 req.xhr
 	was this a xhr
@@ -1208,75 +1208,75 @@ req.xhr
 
 
 			till here
-				file: Req_object/req_app.js	
+				file: Req_object/req_app.js
 
 
 
-Methods 
+Methods
 
 E-> Provisional headers are shown when you get this that means that the req headers are not updated
-req.accepts 
-	the req accepts the best response if there is an array, 
-		if it takes the one option the app returns it if none are acceptable it retunrs false 
+req.accepts
+	the req accepts the best response if there is an array,
+		if it takes the one option the app returns it if none are acceptable it retunrs false
 			this can be a MIME type or an file extension
-FILE: Req_object/accepts_req.js 
+FILE: Req_object/accepts_req.js
 
 req.acceptsCharsets(charset [, ...])
-	if it doesnt accept the charset you get false 
-		array -> first 
-			one -> one  : false 
-				if the req doesnt have a 
+	if it doesnt accept the charset you get false
+		array -> first
+			one -> one  : false
+				if the req doesnt have a
 
 req.acceptsEncodings(encoding [, ...])
 	Accept-Encoding field header like gzip deflate bzip
 
 
 req.acceptsLanguages(lang [, ...])
-	if a language is not accepted false 
+	if a language is not accepted false
 
-				till here 
-					FILE: Req_object/accepts_req.js 
+				till here
+					FILE: Req_object/accepts_req.js
 
 req.get(field)
 req.header(field).
 	gets a field in the HTTP header case insensitive
 
-FILE: Req_object/http_header_get_req.js	
+FILE: Req_object/http_header_get_req.js
 
 
 
 req.is(type)
-	if the req has no body returns null 
+	if the req has no body returns null
 		if the type is wrong it returns false
 FILE:Req_object is_type_req.js
 
 req.range(size[, options])
 	range header parser
 
-	options 
+	options
 		combine -- boolean -- default:false --Specify if overlapping & adjacent ranges should be combined
-			undefined so far 
-FILE: Req_object/range_req.js			
+			undefined so far
+FILE: Req_object/range_req.js
 
 
 														E -> X -> P -> R -> E -> S -> S ->
 
 Response
 
-Properties 
-res.app 
-	refers to the express app it belongs too 
-FILE: Res_object/res_app.js 
+Properties
+res.app
+	refers to the express app it belongs too
+FILE: Res_object/res_app.js
 
 res.headersSent
-	did the app send http headers for the response 
-FILE: Res_object/headersSent_res.js																
+	did the app send http headers for the response
+FILE: Res_object/headersSent_res.js
 
-res.locals 
-	An object that contains response 
+res.locals
+	An object that contains response
 	local variables scoped to the request,
-	hence you can see this in the req/res cycle 
-FILE: Res_object/res_locals.js 	
+	hence you can see this in the req/res cycle
+FILE: Res_object/res_locals.js
 
 
 Methods
@@ -1285,7 +1285,7 @@ res.append(field [, value])
 res.append() is supported by Express v4.11.0+
 adds value to http response header
 	dont call res.set() or it will reset things
-File: Res_object/append_res.js	
+File: Res_object/append_res.js
 
 res.attachment([filename])
 	sets res header Content-Disposition = 'attachment'
@@ -1296,66 +1296,66 @@ res.attachment([filename])
 
 res.cookie(name, value [, options])
 sets the HTTP Set-Cookie header with the options provided.
-Any option not specified defaults to the value stated in RFC 6265. https://tools.ietf.org/html/rfc6265		
+Any option not specified defaults to the value stated in RFC 6265. https://tools.ietf.org/html/rfc6265
 +----------+-------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------
-| Property | Type              | Description                                                                                                                                         
+| Property | Type              | Description
 +----------+-------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------
-| domain   | String            | Domain name for the cookie. Defaults to the domain name of the app.                                                                                 
+| domain   | String            | Domain name for the cookie. Defaults to the domain name of the app.
 +----------+-------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------
 | encode   | Function          | A synchronous function used for cookie value encoding.
-								 Defaults to encodeURIComponent.  no async                                                             
+								 Defaults to encodeURIComponent.  no async
 +----------+-------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------
-| expires  | Date              | "Expiry date of the cookie in GMT. If not specified or set to 0       
+| expires  | Date              | "Expiry date of the cookie in GMT. If not specified or set to 0
 									creates a session cookie."  in ms                                                                            |
 +----------+-------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------
-| httpOnly | Boolean           | Flags the cookie to be accessible only by the web server.                                                                                           
+| httpOnly | Boolean           | Flags the cookie to be accessible only by the web server.
 +----------+-------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------
 | maxAge   | Number            | Convenient option for setting the expiry time
-								 relative to the current time in milliseconds. 
-								 this results in expires being invalid                                                        
+								 relative to the current time in milliseconds.
+								 this results in expires being invalid
 +----------+-------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------
-| path     | String            | Path for the cookie. Defaults to “/”.                                                                                                               
+| path     | String            | Path for the cookie. Defaults to “/”.
 +----------+-------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------
-| secure   | Boolean           | Marks the cookie to be used with HTTPS only.                                                                                                        
+| secure   | Boolean           | Marks the cookie to be used with HTTPS only.
 +----------+-------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------
 | signed   | Boolean           | Indicates if the cookie should be signed. then access through
-								req.signedCookie object                                                                                                           
+								req.signedCookie object
 +----------+-------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------
-| sameSite | Boolean or String | Value of the “SameSite” Set-Cookie attribute. More information at 
-								 https://tools.ietf.org/html/draft-ietf-httpbis-cookie-same-site-00#section-4.1.1. 
-+----------+-------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------					 
+| sameSite | Boolean or String | Value of the “SameSite” Set-Cookie attribute. More information at
+								 https://tools.ietf.org/html/draft-ietf-httpbis-cookie-same-site-00#section-4.1.1.
++----------+-------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 
 res.clearCookie(name [, options])
 Web browsers and other compliant clients clear only if the options are identical
 
-	till here 
-		file: Res_object/cookie_res.js 
+	till here
+		file: Res_object/cookie_res.js
 
 
 res.format(object)
 
-performs content negotiation based on the requests Accepts HTTP header using req.accepts(). if they dont match up or the format donest have the 
-a MIME type available its sends a 406 not acceptable 
-	E-> sometimes even if the client does not have the MINE type in the accepts HTTP header it still works 
-		you can also use words as shown in the file 
+performs content negotiation based on the requests Accepts HTTP header using req.accepts(). if they dont match up or the format donest have the
+a MIME type available its sends a 406 not acceptable
+	E-> sometimes even if the client does not have the MINE type in the accepts HTTP header it still works
+		you can also use words as shown in the file
 			file: Res_object/format_res.js
 
 
 res.get(field)
 
-gets any value in the response header, non case-sensitive 
+gets any value in the response header, non case-sensitive
 
 
 res.links(links)
-	joins the links property in the Link HTTP header field 
+	joins the links property in the Link HTTP header field
 		FILE:Res_object/links_res.js
 
 res.location(path)
 	Sets the response Location HTTP header to the specified path parameter.
 		if you see 'back' it referes to the Referer tag in the header, or else it refers to "/"
-			its the browser's job to redirect accordingly 
+			its the browser's job to redirect accordingly
 				FILE:Res_object/location_res.js
 
 
@@ -1367,18 +1367,18 @@ Sets the response’s HTTP header field to value.
 		  'Content-Type': 'text/plain',
 		  'Content-Length': '123',
 		  'ETag': '12345'
-		});					 		
+		});
 
 
 res.type(type)
-Sets the Content-Type HTTP header to the MIME type 
-	just like res.set 
+Sets the Content-Type HTTP header to the MIME type
+	just like res.set
 	res.type('.html');              // => 'text/html'
 	res.type('html');               // => 'text/html'
 	res.type('json');               // => 'application/json'
 	res.type('application/json');   // => 'application/json'
 	res.type('png');                // => image/png:
-		if the an invalid content-type is given you get an invalid media error 
+		if the an invalid content-type is given you get an invalid media error
 			FILE:Res_object/type_res.js
 
 
@@ -1386,11 +1386,11 @@ res.vary(field)
 	Adds the field to the Vary response header, if it is not there already.
 		res.vary('User-Agent').render('docs');
 
-EXPRESS security Practices 
+EXPRESS security Practices
 
-dont use deprecated Express 
-	use TLS with NGINX 
-		TO GET a free TLS certificate 
+dont use deprecated Express
+	use TLS with NGINX
+		TO GET a free TLS certificate
 			https://letsencrypt.org/about/
 
 use Helmet a set of HTTP header security middleware
@@ -1403,9 +1403,9 @@ Don’t use the default session cookie name
 Set cookie security options
 
 Ensure your dependencies are secure
-	use npm audit 
+	use npm audit
 
-check here to make sure 
+check here to make sure
 	https://expressjs.com/en/advanced/best-practice-security.html
 
 use NGINX to Cache request results, Use a load balancer  and Use a reverse proxy
